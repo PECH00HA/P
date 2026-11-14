@@ -71,12 +71,9 @@ body.light .app{background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255
 .brand .urdu{font-family:'Noto Nastaliq Urdu',serif;font-size:15px;line-height:2.05;
   color:#fff0b3;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   margin:0;text-shadow:0 1px 2px rgba(0,0,0,.2);}
-.brand .sub{font-size:9px;color:rgba(255,255,255,.88);letter-spacing:.25px;line-height:1.45;
-  margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .appbar .iconbar{background:rgba(255,255,255,.12);border:1px solid rgba(255,238,184,.35);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.12);color:#fff0b3;}
 .appbar .langbtn{color:#fff0b3;}
-.appbar .sync-badge{box-shadow:0 0 0 2px #047857;}
 body.light .appbar{background:linear-gradient(118deg,#064e3b 0%,#047857 52%,#065f46 100%);}
 @media(max-width:360px){.appbar{gap:6px;padding:8px 7px 10px}.brand .urdu{font-size:13px}}
 
@@ -92,13 +89,11 @@ body.light .iconbar .moon{display:none;}body.light .iconbar .sun{display:block;}
 body.light .iconbar.themebtn{color:var(--gold);}
 .langbtn{width:auto;min-width:34px;padding:0 8px;font-size:10px;font-weight:700;
   letter-spacing:.5px;color:var(--gold);}
-.sync-badge{position:absolute;top:-4px;right:-4px;min-width:15px;height:15px;padding:0 4px;
-  background:var(--red);color:#fff;border-radius:8px;font-size:8.5px;font-weight:700;
-  display:none;align-items:center;justify-content:center;box-shadow:0 0 0 2px var(--bg-1);}
-.sync-badge.show{display:flex;}
 .net{width:9px;height:9px;border-radius:50%;background:var(--red);flex-shrink:0;
   box-shadow:0 0 9px var(--red);transition:.3s;}
 .net.on{background:var(--green);box-shadow:0 0 9px var(--green);}
+.net.syncing{background:var(--gold);box-shadow:0 0 9px var(--gold);animation:pulseDot 1s infinite;}
+@keyframes pulseDot{0%,100%{opacity:1}50%{opacity:.4}}
 
 /* STORAGE BAR */
 .storage-bar{flex-shrink:0;height:20px;background:var(--glass);
@@ -109,6 +104,7 @@ body.light .iconbar.themebtn{color:var(--gold);}
 .storage-bar .sb-dot{width:6px;height:6px;border-radius:50%;
   background:#ef4444;flex-shrink:0;box-shadow:0 0 6px #ef4444;transition:.3s;}
 .storage-bar .sb-dot.on{background:#22c55e;box-shadow:0 0 6px #22c55e;}
+.storage-bar .sb-dot.syncing{background:#fbbf24;box-shadow:0 0 6px #fbbf24;animation:pulseDot 1s infinite;}
 .storage-bar .sb-track{flex:1;height:5px;border-radius:3px;
   background:rgba(255,255,255,.08);overflow:hidden;}
 body.light .storage-bar .sb-track{background:rgba(15,23,42,.08);}
@@ -126,6 +122,7 @@ body.light .storage-bar .sb-track{background:rgba(15,23,42,.08);}
   font-weight:600;flex-shrink:0;white-space:nowrap;}
 .storage-bar .sb-sync.ok{color:#22c55e;border-color:rgba(34,197,94,.3);}
 .storage-bar .sb-sync.off{color:#f59e0b;border-color:rgba(245,158,11,.3);}
+.storage-bar .sb-sync.syncing{color:#fbbf24;border-color:rgba(251,191,36,.3);animation:pulseDot 1s infinite;}
 
 .screens{flex:1;position:relative;overflow:hidden;}
 .screen{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;
@@ -135,7 +132,6 @@ body.light .storage-bar .sb-track{background:rgba(15,23,42,.08);}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .screen::-webkit-scrollbar{width:0;}
 
-/* SEARCH */
 .searchwrap{display:flex;align-items:center;gap:9px;background:var(--glass-2);
   border:1px solid var(--glass-border);box-shadow:var(--glass-hl);
   border-radius:14px;padding:11px 13px;margin-bottom:11px;transition:border-color .2s;}
@@ -145,7 +141,6 @@ body.light .storage-bar .sb-track{background:rgba(15,23,42,.08);}
 .searchwrap input{flex:1;background:none;border:0;outline:0;color:var(--txt);font-size:13.5px;}
 .searchwrap input::placeholder{color:var(--txt-4);}
 
-/* CHIPS */
 .chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:11px;scrollbar-width:none;
   -webkit-overflow-scrolling:touch;}
 .chips::-webkit-scrollbar{display:none;}
@@ -155,7 +150,6 @@ body.light .storage-bar .sb-track{background:rgba(15,23,42,.08);}
 .chip.active{background:linear-gradient(135deg,var(--gold),var(--gold-2));
   color:#1c1917;border-color:transparent;font-weight:600;box-shadow:0 4px 16px var(--gold-glow);}
 
-/* ITEM GRID */
 .item-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .item-card{background:var(--glass-2);border:1px solid var(--glass-border);
   box-shadow:var(--glass-hl),var(--glass-shadow);border-radius:16px;padding:12px 12px 11px;
@@ -177,7 +171,6 @@ body.light .storage-bar .sb-track{background:rgba(15,23,42,.08);}
 .empty{text-align:center;padding:44px 16px;color:var(--txt-4);font-size:13px;
   font-family:'Noto Nastaliq Urdu',serif;line-height:2.2;}
 
-/* CARDS */
 .card{background:var(--glass);border:1px solid var(--glass-border);
   box-shadow:var(--glass-hl),var(--glass-shadow);border-radius:16px;padding:13px;
   margin-bottom:12px;}
@@ -186,7 +179,6 @@ body.light .storage-bar .sb-track{background:rgba(15,23,42,.08);}
 .card-title::before{content:'';width:3px;height:14px;border-radius:2px;
   background:linear-gradient(180deg,var(--gold),var(--gold-2));}
 
-/* INPUTS */
 input,select{width:100%;background:var(--glass-2);border:1px solid var(--glass-border-2);
   border-radius:11px;padding:11px 12px;color:var(--txt);font-size:13px;outline:0;
   transition:.18s;box-shadow:var(--glass-hl);-webkit-appearance:none;appearance:none;}
@@ -205,7 +197,6 @@ body.light select option{background:#fff;color:#0f172a;}
 .ilist-cost.loss{color:var(--red);}
 .pm-old{font-size:10px;color:var(--txt-4);margin-top:4px;text-align:center;min-height:12px;}
 
-/* BUTTONS */
 .btn{width:100%;border:0;border-radius:13px;padding:12px;font-size:13.5px;font-weight:600;
   cursor:pointer;transition:.15s;display:flex;align-items:center;justify-content:center;gap:7px;}
 .btn:active{transform:scale(.97);}
@@ -223,7 +214,6 @@ body.light select option{background:#fff;color:#0f172a;}
 .btn.big{padding:15px;font-size:14.5px;}
 .btn.sm{width:auto;padding:8px 14px;font-size:12px;border-radius:10px;}
 
-/* ITEM LIST */
 .ilist-item{display:flex;align-items:center;gap:8px;padding:10px 0;
   border-bottom:1px solid var(--glass-border);}
 .ilist-item:last-child{border-bottom:0;padding-bottom:0;}
@@ -240,7 +230,6 @@ body.light select option{background:#fff;color:#0f172a;}
 .iconbtn:active{transform:scale(.88);}
 .iconbtn.danger{color:var(--red);}
 
-/* CART BAR */
 .cartbar{position:absolute;left:12px;right:12px;bottom:76px;z-index:40;
   background:linear-gradient(135deg,var(--gold),var(--gold-2));border-radius:16px;
   padding:12px 16px;display:none;align-items:center;justify-content:space-between;
@@ -254,7 +243,6 @@ body.light select option{background:#fff;color:#0f172a;}
 .cartbar .cb-r{font-size:12.5px;font-weight:700;background:rgba(0,0,0,.16);
   padding:8px 14px;border-radius:10px;}
 
-/* BOTTOM NAV */
 .bottomnav{position:absolute;bottom:0;left:0;right:0;height:62px;z-index:50;
   background:var(--glass);border-top:1px solid var(--glass-border);
   box-shadow:var(--glass-hl);display:flex;align-items:stretch;
@@ -265,14 +253,11 @@ body.light select option{background:#fff;color:#0f172a;}
 .navbtn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.9;
   stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
 .navbtn span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
-.navbtn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.9;
-  stroke-linecap:round;stroke-linejoin:round;}
 .navbtn.active{color:var(--gold);}
 .navbtn.active::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
   width:24px;height:2.5px;border-radius:0 0 4px 4px;
   background:linear-gradient(90deg,var(--gold),var(--gold-2));box-shadow:0 0 8px var(--gold-glow);}
 
-/* SHEETS */
 .sheet{position:absolute;inset:0;z-index:100;
   background:linear-gradient(180deg,rgba(10,14,26,.98),rgba(10,14,26,.96));
   display:flex;flex-direction:column;transform:translateY(101%);
@@ -289,7 +274,6 @@ body.light .sheet{background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(2
 .sheet-foot{flex-shrink:0;padding:12px 14px calc(12px + env(safe-area-inset-bottom));
   background:var(--glass);border-top:1px solid var(--glass-border);box-shadow:var(--glass-hl);}
 
-/* CART ITEM */
 .citem{background:var(--glass-2);border:1px solid var(--glass-border);
   box-shadow:var(--glass-hl);border-radius:14px;padding:11px;margin-bottom:9px;}
 .citem-top{display:flex;align-items:center;gap:8px;margin-bottom:9px;}
@@ -309,7 +293,6 @@ body.light .sheet{background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(2
 .rateinp{width:78px;padding:9px 8px;font-size:12.5px;text-align:right;}
 .amt{margin-left:auto;font-size:13.5px;font-weight:700;color:var(--gold);white-space:nowrap;}
 
-/* CUSTOMER SUGGEST */
 .cust-suggest{display:none;position:absolute;left:11px;right:11px;z-index:20;margin-top:6px;border-radius:12px;overflow:hidden;
   border:1px solid var(--glass-border-2);background:var(--am-bg2);
   box-shadow:var(--glass-hl);}
@@ -324,7 +307,6 @@ body.light .sheet{background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(2
 .cust-ph{font-size:11px;color:var(--gold);font-weight:700;white-space:nowrap;
   letter-spacing:.2px;}
 
-/* TOTALS */
 .trow{display:flex;align-items:center;justify-content:space-between;gap:10px;
   padding:8px 0;font-size:12.5px;color:var(--txt-3);
   border-bottom:1px dashed var(--glass-border-2);}
@@ -336,7 +318,6 @@ body.light .sheet{background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(2
 .trow.grand span{font-size:13px;color:var(--gold);font-weight:600;}
 .trow.grand b{font-size:19px;color:var(--gold);font-weight:700;}
 
-/* PAYMENT */
 .pay-section{margin-top:14px;padding-top:12px;border-top:1.5px dashed var(--gold);}
 .pay-section-title{font-size:11.5px;font-weight:700;color:var(--gold);margin-bottom:10px;
   display:flex;align-items:center;gap:6px;letter-spacing:.3px;text-transform:uppercase;}
@@ -361,7 +342,6 @@ body.light .sheet{background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(2
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .quickfill button:active{transform:scale(.94);background:var(--gold-soft);color:var(--gold);}
 
-/* MODALS */
 .am-bg{position:absolute;inset:0;z-index:200;background:rgba(0,0,0,.65);
   display:flex;align-items:center;justify-content:center;padding:20px;
   opacity:0;pointer-events:none;transition:opacity .22s;}
@@ -414,7 +394,6 @@ body.light .am-bg{background:rgba(15,23,42,.45);}
   border-radius:11px;padding:10px 11px;margin-bottom:12px;line-height:1.7;font-weight:500;}
 .am-warn .ic{font-size:13px;line-height:1.4;}
 
-/* RECEIPT PAPER */
 .paper-wrap{padding:14px 10px;display:flex;justify-content:center;min-height:100%;}
 .paper{position:relative;width:100%;max-width:320px;background:#ffffff;color:#0f172a;
   border-radius:8px;padding:12px 11px 12px;font-family:'Poppins',sans-serif;font-weight:500;
@@ -430,7 +409,6 @@ body.light .am-bg{background:rgba(15,23,42,.45);}
 .p-urdu{font-family:'Noto Nastaliq Urdu',serif;font-size:16px;line-height:1.85;
   font-weight:700;color:#0f172a;margin-bottom:0;}
 .p-shop{font-size:8.5px;font-weight:800;letter-spacing:.7px;color:#0f172a;margin-top:-2px;}
-.p-meta-line{font-size:9px;font-weight:600;color:#334155;margin-top:3px;letter-spacing:0 !important;}
 .p-addr-line{font-family:'Noto Nastaliq Urdu','Noto Sans Arabic',Tahoma,system-ui,sans-serif !important;
   font-size:9.5px !important;line-height:2.0 !important;color:#334155 !important;
   margin-top:2px !important;letter-spacing:0 !important;word-spacing:0 !important;
@@ -461,7 +439,6 @@ table.p-items td.r,table.p-items th.r{text-align:right;}
 .p-note-line{text-align:center;font-family:'Noto Nastaliq Urdu',serif;
   font-size:10.5px;line-height:1.85;color:#0f172a;font-weight:700;
   margin-top:8px;padding-top:6px;border-top:1px dashed #94a3b8;}
-.p-note-small{text-align:center;font-size:8px;color:#64748b;margin-top:2px;letter-spacing:.2px;font-weight:600;}
 .p-foot{display:flex;justify-content:space-between;align-items:flex-end;
   margin-top:12px;font-size:8px;color:#475569;font-weight:600;}
 .p-foot .sig{border-top:1px solid #64748b;padding-top:2px;width:68px;text-align:center;}
@@ -469,7 +446,6 @@ table.p-items td.r,table.p-items th.r{text-align:right;}
   text-align:right;line-height:1.6;}
 .p-foot .dev b{display:block;color:#0f172a;font-weight:800;font-size:8px;}
 
-/* TOAST */
 .toast{position:absolute;left:50%;bottom:150px;transform:translate(-50%,20px);
   background:var(--glass-3);border:1px solid var(--glass-border-2);
   box-shadow:var(--glass-hl),var(--glass-shadow);
@@ -478,7 +454,6 @@ table.p-items td.r,table.p-items th.r{text-align:right;}
   will-change:transform,opacity;}
 .toast.show{opacity:1;transform:translate(-50%,0);}
 
-/* HISTORY */
 .hist-toolbar{display:flex;gap:7px;align-items:center;margin:0 0 10px;
   flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;
   position:sticky;top:0;z-index:10;padding:8px 4px;
@@ -520,6 +495,7 @@ table.p-items td.r,table.p-items th.r{text-align:right;}
 .badge.ok{background:rgba(34,197,94,.16);color:#4ade80;}
 body.light .badge.ok{color:#16a34a;}
 .badge.pend{background:var(--gold-soft);color:var(--gold);}
+.badge.syncing{background:rgba(251,191,36,.22);color:#fbbf24;animation:pulseDot 1.2s infinite;}
 .badge.paid{background:rgba(34,197,94,.18);color:#22c55e;}
 body.light .badge.paid{color:#15803d;}
 .badge.half{background:rgba(251,191,36,.18);color:#f59e0b;}
@@ -530,8 +506,6 @@ body.light .badge.paid{color:#15803d;}
 .hist-phone{font-size:9.5px;color:var(--txt-3);display:flex;align-items:center;gap:5px;
   margin-top:3px;flex-wrap:wrap;font-weight:600;}
 .hist-phone svg{width:11px;height:11px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:2;}
-.hist-profit{font-size:9.5px;color:#22c55e;font-weight:700;margin-left:auto;}
-body.light .hist-profit{color:#15803d;}
 .hist-del-single{width:28px;height:28px;border-radius:9px;flex-shrink:0;
   background:rgba(239,68,68,.10);border:1px solid rgba(239,68,68,.22);
   color:var(--red);display:grid;place-items:center;cursor:pointer;transition:.15s;margin-top:1px;}
@@ -539,7 +513,6 @@ body.light .hist-profit{color:#15803d;}
 .hist-del-single svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;
   stroke-linecap:round;stroke-linejoin:round;}
 
-/* REPORTS */
 .report-tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;
   -webkit-overflow-scrolling:touch;}
 .report-tabs::-webkit-scrollbar{display:none;}
@@ -566,10 +539,7 @@ body.light .rep-card .rep-val.green{color:#16a34a;}
   border:0;box-shadow:0 8px 24px var(--gold-glow),inset 0 1px 0 rgba(255,255,255,.4);}
 .rep-big .rep-label,.rep-big .rep-val,.rep-big .rep-sub{color:#1c1917;}
 .rep-big .rep-val{font-size:22px;}
-.rep-empty{text-align:center;padding:34px 16px;color:var(--txt-4);font-size:12.5px;
-  font-family:'Noto Nastaliq Urdu',serif;line-height:2.1;}
 
-/* CONFIRM MODAL */
 .cf-bg{position:absolute;inset:0;z-index:300;background:rgba(0,0,0,.7);
   display:flex;align-items:center;justify-content:center;padding:20px;
   opacity:0;pointer-events:none;transition:.22s;}
@@ -601,7 +571,6 @@ body.light .cf-bg{background:rgba(15,23,42,.5);}
 .cf-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .cf-actions .btn{padding:12px;font-size:13px;}
 
-/* DESKTOP PC MODE */
 .iconbar.deskbtn.on{background:linear-gradient(135deg,var(--gold),var(--gold-2));color:#1c1917;border-color:transparent;}
 .appbar .iconbar.deskbtn{width:auto !important;min-width:34px;padding:0 8px !important;display:flex;align-items:center;justify-content:center;gap:4px;font-size:10px;font-weight:700;letter-spacing:.5px;}
 .appbar .iconbar.deskbtn svg{width:15px !important;height:15px !important;}
@@ -624,144 +593,60 @@ body.desktop .bottomnav{left:0;right:0;margin:0 auto;max-width:720px;border-radi
 
 #printArea{display:none;}
 
-/* ============================================================
-   🖨️ PRINT SETTINGS — PRESET (User Requested)
-   Pages: Custom -1 | Color: B&W | Paper: Statement | 1/sheet | No Margin | Scale 200
-   ============================================================ */
 @media print{
-  /* Statement paper: 5.5in × 8.5in = 396pt × 612pt */
-  @page{
-    size: 5.5in 8.5in portrait;
-    margin: 0;   /* Margin: None */
-  }
-
+  @page{ size: 5.5in 8.5in portrait; margin: 0; }
   html, body{
-    margin: 0 !important;
-    padding: 0 !important;
-    background: #fff !important;
-    color: #000 !important;
-    display: block !important;
-    overflow: visible !important;
-    width: 5.5in !important;
-    height: auto !important;
+    margin: 0 !important; padding: 0 !important;
+    background: #fff !important; color: #000 !important;
+    display: block !important; overflow: visible !important;
+    width: 5.5in !important; height: auto !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
-    color-adjust: exact !important;
-    /* Force black & white rendering */
-    filter: grayscale(0) !important;
   }
-
   body::before, body::after { display: none !important; }
   .app { display: none !important; }
-
-  #printArea{
-    display: block !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    width: 5.5in !important;
-  }
-
-  #printArea .paper-wrap{
-    padding: 0 !important;
-    margin: 0 !important;
-    min-height: 0 !important;
-    display: block !important;
-  }
-
-  /* Scale 200% via transform */
+  #printArea{ display: block !important; margin: 0 !important; padding: 0 !important; width: 5.5in !important; }
+  #printArea .paper-wrap{ padding: 0 !important; margin: 0 !important; min-height: 0 !important; display: block !important; }
   #printArea .paper{
-    width: 2.75in !important;
-    max-width: 2.75in !important;
-    min-height: 0 !important;
-    padding: 3mm 3mm !important;
-    margin: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    font-size: 8px !important;
-    line-height: 1.28 !important;
-    font-weight: 700 !important;
-    color: #000000 !important;
-    background: #ffffff !important;
-    transform: scale(2) !important;
-    transform-origin: top left !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
+    width: 2.75in !important; max-width: 2.75in !important;
+    min-height: 0 !important; padding: 3mm 3mm !important;
+    margin: 0 !important; border-radius: 0 !important; box-shadow: none !important;
+    font-size: 8px !important; line-height: 1.28 !important; font-weight: 700 !important;
+    color: #000000 !important; background: #ffffff !important;
+    transform: scale(2) !important; transform-origin: top left !important;
+    -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important;
   }
-
-  /* Force pure black for B&W printing */
-  #printArea *{
-    color: #000000 !important;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-
-  /* Keep green for paid / red for due but grayscale-friendly */
+  #printArea *{ color: #000000 !important; }
   #printArea .p-tr.paid b{ color: #000 !important; text-decoration: underline !important; }
   #printArea .p-tr.due b{ color: #000 !important; font-weight: 900 !important; }
-
-  /* Header */
   #printArea .p-head{ padding-bottom:3px !important; border-bottom:1.5px solid #000 !important; }
   #printArea .p-urdu{ font-weight:900 !important; font-size:11px !important; line-height:1.7 !important; color:#000 !important; }
-  #printArea .p-shop{ font-weight:900 !important; font-size:6.5px !important; letter-spacing:.4px !important; color:#000 !important; }
-  #printArea .p-owner-line{ font-size:9px !important; line-height:1.6 !important; font-weight:900 !important; }
+  #printArea .p-shop{ font-weight:900 !important; font-size:6.5px !important; color:#000 !important; }
+  #printArea .p-owner-line{ font-size:9px !important; line-height:1.6 !important; font-weight:900 !important; color:#000 !important; }
   #printArea .p-addr-line{ font-size:7px !important; line-height:1.6 !important; font-weight:800 !important; color:#000 !important; }
   #printArea .p-phones-leader{ margin:2px 0 !important; padding:2px 3px !important; font-size:6.5px !important; font-weight:900 !important; border:1px dashed #000 !important; }
-  #printArea .p-phone-num{ font-weight:900 !important; color:#000 !important; }
-
-  /* Info */
   #printArea .p-info{ font-weight:800 !important; font-size:7px !important; padding:2px 0 !important; line-height:1.25 !important; border-bottom:1px solid #000 !important; }
-  #printArea .p-info b{ font-weight:900 !important; color:#000 !important; }
-
-  /* Items table */
-  #printArea table.p-items{ margin-top:2px !important; }
-  #printArea table.p-items th{ font-weight:900 !important; font-size:6.5px !important; padding:1.5px 1px !important; border-bottom:1.5px solid #000 !important; color:#000 !important; }
-  #printArea table.p-items td{ font-weight:800 !important; font-size:7px !important; padding:1.5px 1px !important; line-height:1.2 !important; border-bottom:.5px solid #000 !important; color:#000 !important; }
-  #printArea .sub2{ font-weight:700 !important; font-size:5.5px !important; line-height:1.15 !important; color:#333 !important; }
-
-  /* Totals */
+  #printArea table.p-items th{ font-weight:900 !important; font-size:6.5px !important; padding:1.5px 1px !important; border-bottom:1.5px solid #000 !important; }
+  #printArea table.p-items td{ font-weight:800 !important; font-size:7px !important; padding:1.5px 1px !important; line-height:1.2 !important; border-bottom:.5px solid #000 !important; }
   #printArea .p-totals{ margin-top:2px !important; padding-top:2px !important; border-top:1.5px solid #000 !important; }
   #printArea .p-tr{ font-weight:800 !important; font-size:7px !important; padding:.5px 0 !important; color:#000 !important; }
-  #printArea .p-tr b{ font-weight:900 !important; color:#000 !important; }
-  #printArea .p-tr.grand{ font-weight:900 !important; font-size:9px !important; padding:2px 0 !important; margin-top:1.5px !important; border-top:1.5px solid #000 !important; border-bottom:1.5px solid #000 !important; }
-  #printArea .p-tr.grand b{ font-weight:900 !important; font-size:10px !important; }
-
-  /* Notes */
-  #printArea .p-note-line{ font-weight:900 !important; font-size:7px !important; line-height:1.4 !important; margin-top:3px !important; padding-top:2px !important; border-top:1px solid #000 !important; color:#000 !important; }
-  #printArea .p-note-small{ font-weight:700 !important; font-size:5.5px !important; margin-top:1px !important; }
-
-  /* Installment Ledger */
-  #printArea .p-inst-box{ margin-top:2px !important; padding:2px !important; border:.8px dashed #000 !important; background:#fff !important; }
-  #printArea .p-inst-title{ font-size:6px !important; font-weight:900 !important; padding-bottom:1px !important; color:#000 !important; border-bottom:1px solid #000 !important; }
-  #printArea .p-inst-table th{ font-size:5.5px !important; padding:.5px !important; color:#000 !important; border-bottom:1px solid #000 !important; }
+  #printArea .p-tr.grand{ font-weight:900 !important; font-size:9px !important; padding:2px 0 !important; border-top:1.5px solid #000 !important; border-bottom:1.5px solid #000 !important; }
+  #printArea .p-note-line{ font-weight:900 !important; font-size:7px !important; color:#000 !important; }
+  #printArea .p-inst-box{ margin-top:2px !important; padding:2px !important; border:.8px dashed #000 !important; }
+  #printArea .p-inst-title{ font-size:6px !important; font-weight:900 !important; color:#000 !important; }
+  #printArea .p-inst-table th{ font-size:5.5px !important; padding:.5px !important; color:#000 !important; }
   #printArea .p-inst-table td{ font-size:6px !important; padding:.5px !important; font-weight:800 !important; color:#000 !important; }
-  #printArea .p-inst-note{ font-size:5px !important; }
-  #printArea .p-inst-method{ font-size:5px !important; background:#e5e5e5 !important; color:#000 !important; }
-
-  /* Stamp */
-  #printArea .p-stamp{ font-weight:900 !important; border-width:1.5px !important; font-size:7.5px !important; padding:1px 4px !important; margin-bottom:1px !important; color:#000 !important; border-color:#000 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-  #printArea .p-stamp.partial, #printArea .p-stamp.credit{ border-color:#000 !important; color:#000 !important; }
-
-  /* Footer */
-  #printArea .p-foot{ font-weight:800 !important; font-size:6px !important; margin-top:4px !important; color:#000 !important; }
-  #printArea .p-foot .sig{ width:48px !important; padding-top:1px !important; border-top:1px solid #000 !important; color:#000 !important; }
-  #printArea .p-foot .dev{ font-weight:800 !important; font-size:5.5px !important; line-height:1.3 !important; color:#000 !important; }
-  #printArea .p-foot .dev b{ font-weight:900 !important; font-size:6px !important; color:#000 !important; }
-
-  /* Avoid page breaks inside */
+  #printArea .p-stamp{ font-weight:900 !important; border-width:1.5px !important; font-size:7.5px !important; padding:1px 4px !important; color:#000 !important; border-color:#000 !important; }
+  #printArea .p-foot{ font-weight:800 !important; font-size:6px !important; color:#000 !important; }
+  #printArea .p-foot .dev b{ font-weight:900 !important; color:#000 !important; }
   #printArea table.p-items tr{ break-inside:avoid; page-break-inside:avoid; }
-  #printArea .p-bottom{ break-inside:avoid; page-break-inside:avoid; }
 }
 
-/* HEADER READABILITY FIX */
 .appbar{background:linear-gradient(118deg,#064e3b 0%,#047857 52%,#065f46 100%) !important;
   border-bottom:2px solid #d6ad55 !important;gap:8px !important;}
 .appbar .brand{min-width:0 !important;flex:1 1 auto !important;gap:3px !important;}
 .appbar .brand .urdu{color:#fff7d6 !important;font-weight:800 !important;
   text-shadow:0 1px 3px rgba(0,0,0,.6) !important;font-size:14px !important;line-height:1.9 !important;}
-.appbar .brand .sub{color:#ffffff !important;opacity:1 !important;
-  font-size:10.5px !important;font-weight:700 !important;letter-spacing:.15px !important;
-  line-height:1.45 !important;text-shadow:0 1px 3px rgba(0,0,0,.7) !important;
-  white-space:normal !important;overflow:visible !important;text-overflow:clip !important;}
 .appbar .logo{width:44px !important;height:44px !important;min-width:44px !important;flex-shrink:0 !important;
   padding:4px !important;border-radius:12px !important;
   background:linear-gradient(145deg,#fff9df,#e8c66f 60%,#c18a28) !important;
@@ -770,18 +655,9 @@ body.desktop .bottomnav{left:0;right:0;margin:0 auto;max-width:720px;border-radi
   display:grid !important;place-items:center !important;}
 .appbar .logo svg{display:block !important;width:100% !important;height:100% !important;}
 .appbar .iconbar{flex-shrink:0 !important;}
-@media(max-width:360px){
- .appbar{gap:5px !important;padding:8px 6px 10px !important;}
- .appbar .logo{width:38px !important;height:38px !important;min-width:38px !important;padding:3px !important;}
- .appbar .brand .urdu{font-size:12px !important;}
- .appbar .brand .sub{font-size:9.5px !important;}
- .appbar .iconbar{width:30px !important;height:30px !important;}
- .appbar .langbtn{min-width:30px !important;padding:0 5px !important;}
-}
 
-/* RECEIPT DETAILS */
 .p-urdu{font-family:'Noto Nastaliq Urdu',serif !important;font-size:16px !important;line-height:2.2 !important;
-  font-weight:700 !important;color:#0f172a !important;margin-bottom:4px !important;padding-bottom:2px !important;}
+  font-weight:700 !important;color:#0f172a !important;margin-bottom:4px !important;}
 .p-shop{font-size:8.5px !important;font-weight:800 !important;letter-spacing:.7px !important;
   color:#0f172a !important;margin-top:2px !important;margin-bottom:4px !important;}
 .p-owner-line{font-family:'Noto Nastaliq Urdu',serif;font-size:12.5px;line-height:1.9;
@@ -795,7 +671,6 @@ body.desktop .bottomnav{left:0;right:0;margin:0 auto;max-width:720px;border-radi
   letter-spacing:.2px !important;text-align:right !important;line-height:1.5 !important;}
 .p-foot .dev b{font-size:8.5px !important;color:#0f172a !important;}
 
-/* STOCK MANAGEMENT */
 .stock-summary-card{background:var(--glass-2);border:1px solid var(--glass-border-2);
   border-radius:14px;padding:12px 14px;box-shadow:var(--glass-hl);margin-bottom:12px;}
 .ssc-top{display:flex;align-items:center;justify-content:space-between;gap:10px;
@@ -846,13 +721,11 @@ body.desktop .bottomnav{left:0;right:0;margin:0 auto;max-width:720px;border-radi
 .sc-actions{display:flex;gap:7px;margin-top:10px;padding-top:8px;border-top:1px solid var(--glass-border);}
 .sc-actions .btn{flex:1;padding:6px 8px;font-size:10px;}
 
-/* QUICK QTY */
 .quick-qty-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:7px 0 10px;}
 .quick-qty-btn{background:var(--glass-2);border:1px solid var(--glass-border-2);border-radius:8px;
   padding:7px 4px;font-size:11px;font-weight:700;color:var(--gold);cursor:pointer;text-align:center;transition:.15s;}
 .quick-qty-btn:active{transform:scale(.92);background:var(--gold-soft);}
 
-/* STOCK BADGE ON POS */
 .ic-stock-badge{font-size:8.5px;font-weight:700;padding:1px 5px;border-radius:6px;
   display:inline-flex;align-items:center;gap:3px;margin:2px 0;
   background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.2);width:fit-content;}
@@ -862,7 +735,6 @@ body.desktop .bottomnav{left:0;right:0;margin:0 auto;max-width:720px;border-radi
 body.desktop #screen-stock > *{max-width:900px;margin-left:auto;margin-right:auto;}
 body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
 
-/* BRAND OWNER GLOW BADGE */
 .brand-owner-badge{display:inline-flex;align-items:center;gap:5px;
   font-size:9.5px;font-weight:700;color:#fff8db;
   background:rgba(251,191,36,.18);border:1px solid rgba(251,191,36,.45);
@@ -871,27 +743,22 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   letter-spacing:.3px;animation:ownerGlow 3s ease-in-out infinite alternate;}
 @keyframes ownerGlow{
-  0%{box-shadow:0 0 8px rgba(251,191,36,.25), inset 0 1px 0 rgba(255,255,255,.15);border-color:rgba(251,191,36,.35);}
-  100%{box-shadow:0 0 16px rgba(251,191,36,.55), inset 0 1px 0 rgba(255,255,255,.3);border-color:rgba(251,191,36,.7);}
+  0%{box-shadow:0 0 8px rgba(251,191,36,.25);border-color:rgba(251,191,36,.35);}
+  100%{box-shadow:0 0 16px rgba(251,191,36,.55);border-color:rgba(251,191,36,.7);}
 }
 .brand-owner-badge .owner-ico{font-size:10px;line-height:1;}
 
-/* STOCK INPUTS */
 .stock-inputs-row{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:4px;}
 .stock-in-field{display:flex;flex-direction:column;gap:3px;}
 .stock-in-field label{font-size:10px;font-weight:700;color:var(--txt-3);letter-spacing:.3px;}
 .stock-in-field input{height:44px;font-size:11.5px;font-weight:600;padding:8px 10px;
   background:var(--am-input-bg);border:1px solid var(--am-input-border);
   border-radius:10px;color:var(--txt);transition:.2s;}
-.stock-in-field input:focus{border-color:var(--gold);outline:none;box-shadow:0 0 8px var(--gold-glow);}
-.stock-in-field input::placeholder{color:var(--txt-4);font-weight:500;font-size:11px;}
 
-/* ITEM LIST ACTIONS */
 .ilist-actions{display:flex;align-items:center;gap:6px;}
 .ilist-stock-sub{font-size:9.5px;color:var(--txt-3);margin-top:2px;}
 .ilist-stock-sub b{color:var(--gold);}
 
-/* DELETE STOCK CAUTION */
 .del-stock-caution{background:rgba(245,158,11,.12);border:1.5px dashed rgba(245,158,11,.45);
   border-radius:11px;padding:10px 12px;margin:11px 0 13px;text-align:left;}
 .dsc-head{display:flex;align-items:center;gap:6px;}
@@ -899,7 +766,6 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
 .dsc-head b{font-size:12px;color:var(--gold);font-weight:800;letter-spacing:.2px;}
 .dsc-note{font-size:10px;color:var(--txt-3);margin-top:5px;line-height:1.55;}
 
-/* STOCK TAB TOGGLE */
 .ssc-top-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .stock-screen-toggle-btn{display:inline-flex;align-items:center;gap:7px;
   padding:7px 13px;border-radius:20px;font-size:11.5px;font-weight:800;
@@ -918,7 +784,6 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
 .sob-title{font-size:12.5px;font-weight:800;color:var(--txt);}
 .sob-desc{font-size:10px;color:var(--txt-3);margin-top:2px;line-height:1.5;}
 
-/* LEADER-WISE ITEM FORM */
 .item-create-card{background:var(--bg-1);border:1px solid var(--border);border-radius:16px;
   padding:14px;box-shadow:var(--glass-hl);margin-bottom:14px;}
 .item-card-header{display:flex;align-items:center;gap:10px;margin-bottom:13px;
@@ -944,10 +809,7 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
 .form-field input, .form-field select{width:100%;height:45px;font-size:12.5px;font-weight:600;padding:9px 11px;
   border-radius:10px;background:var(--bg-1);border:1px solid var(--border);
   color:var(--txt);transition:.2s;box-sizing:border-box;}
-.form-field input:focus, .form-field select:focus{border-color:var(--gold);outline:none;box-shadow:0 0 0 3px var(--gold-soft);}
-.form-field input::placeholder{color:var(--txt-4);font-weight:500;font-size:11.5px;}
 
-/* UNIT CHIPS */
 .unit-chips-grid{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;}
 .unit-chip{border:1px solid var(--border);border-radius:18px;padding:5px 10px;
   background:var(--bg-1);color:var(--txt-2);font-size:10.5px;font-weight:600;
@@ -955,9 +817,7 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
 .unit-chip:hover{border-color:var(--gold);color:var(--txt);}
 .unit-chip.active{background:var(--gold);color:#0f172a;font-weight:800;border-color:var(--gold);
   box-shadow:0 0 10px rgba(251,191,36,.4);transform:scale(1.02);}
-.unit-chip:active{transform:scale(.96);}
 
-/* INSTALLMENT LEDGER */
 .p-inst-box{margin-top:7px;padding:6px;border:1px dashed #0f172a;border-radius:4px;background:#f8fafc;}
 .p-inst-title{font-size:9.5px;font-weight:800;color:#0f172a;display:flex;
   justify-content:space-between;align-items:center;margin-bottom:4px;
@@ -975,19 +835,13 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
 .p-inst-total{font-weight:800;border-top:1px solid #0f172a;background:#f1f5f9;}
 .p-inst-due{font-weight:800;color:#b91c1c;background:#fef2f2;}
 
-/* PRINT PRESET GUIDE BANNER */
-.print-preset-banner{
-  position:absolute;inset:0;z-index:400;
-  background:rgba(0,0,0,.85);
-  display:none;align-items:center;justify-content:center;padding:20px;
-}
+.print-preset-banner{position:absolute;inset:0;z-index:400;
+  background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;padding:20px;}
 .print-preset-banner.show{display:flex;}
-.print-preset-box{
-  background:linear-gradient(160deg,var(--am-bg1),var(--am-bg2));
+.print-preset-box{background:linear-gradient(160deg,var(--am-bg1),var(--am-bg2));
   border:1px solid var(--am-border);border-radius:18px;
   padding:20px 18px;max-width:340px;width:100%;
-  box-shadow:var(--am-shadow),var(--am-hl);
-}
+  box-shadow:var(--am-shadow),var(--am-hl);}
 .ppb-title{font-size:14.5px;font-weight:800;color:var(--gold);
   display:flex;align-items:center;gap:8px;margin-bottom:12px;}
 .ppb-list{display:flex;flex-direction:column;gap:7px;margin-bottom:15px;}
@@ -1038,10 +892,7 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
       </svg>
     </button>
-    <button class="iconbar" id="syncBadgeBtn" title="Pending Sync" style="display:none;">
-      <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><polyline points="21 4 21 10 15 10"/></svg>
-      <span class="sync-badge" id="syncPendingBadge">0</span>
-    </button>
+    <!-- PENDING SYNC BUTTON REMOVED -->
     <div class="net" id="netDot" title="Firebase"></div>
   </header>
 
@@ -1147,7 +998,7 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
             <div class="ssc-sub" data-ur="دکان کے سامان اور مالیت کا مکمل ریکارڈ" data-en="Shop inventory and stock value">دکان کے سامان اور مالیت کا مکمل ریکارڈ</div>
           </div>
           <div class="ssc-top-actions">
-            <button type="button" class="stock-screen-toggle-btn on" id="stockTabToggleBtn" title="اسٹاک سسٹم آن / آف کریں">
+            <button type="button" class="stock-screen-toggle-btn on" id="stockTabToggleBtn">
               <span class="sst-dot"></span>
               <span id="stockTabToggleTxt">اسٹاک: آن ✔</span>
             </button>
@@ -1159,16 +1010,16 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
           <div class="sob-inner">
             <div class="sob-icon">📦</div>
             <div class="sob-info">
-              <div class="sob-title" data-ur="اسٹاک سسٹم بند ہے (سادہ ریٹیلر موڈ)" data-en="Stock System is OFF (Simple Retailer Mode)">اسٹاک سسٹم بند ہے (سادہ ریٹیلر موڈ)</div>
-              <div class="sob-desc" data-ur="اس موڈ میں بغیر کسی اسٹاک پابندی کے بلنگ جاری رہتی ہے۔" data-en="Inventory tracking disabled.">اس موڈ میں بغیر کسی اسٹاک پابندی کے بلنگ جاری رہتی ہے۔</div>
+              <div class="sob-title" data-ur="اسٹاک سسٹم بند ہے" data-en="Stock System is OFF">اسٹاک سسٹم بند ہے</div>
+              <div class="sob-desc" data-ur="بغیر اسٹاک پابندی بلنگ جاری رہتی ہے۔" data-en="Billing continues without stock limits.">بغیر اسٹاک پابندی بلنگ جاری رہتی ہے۔</div>
             </div>
-            <button type="button" class="btn primary sm" id="stockBannerTurnOnBtn" data-ur="🟢 ابھی آن کریں" data-en="🟢 Turn ON">🟢 ابھی آن کریں</button>
+            <button type="button" class="btn primary sm" id="stockBannerTurnOnBtn" data-ur="🟢 آن کریں" data-en="🟢 Turn ON">🟢 آن کریں</button>
           </div>
         </div>
         <div class="ssc-stats">
           <div class="ssc-stat"><div class="ssc-lbl" data-ur="کل آئٹمز" data-en="Items">کل آئٹمز</div><div class="ssc-val" id="stockTotalItems">0</div></div>
-          <div class="ssc-stat"><div class="ssc-lbl" data-ur="کل مالیت (خرید)" data-en="Total Value">کل مالیت (خرید)</div><div class="ssc-val gold" id="stockTotalVal">Rs 0</div></div>
-          <div class="ssc-stat"><div class="ssc-lbl" data-ur="کم اسٹاک الرٹس" data-en="Low Stock">کم اسٹاک الرٹس</div><div class="ssc-val warn" id="stockLowCount">0</div></div>
+          <div class="ssc-stat"><div class="ssc-lbl" data-ur="کل مالیت" data-en="Value">کل مالیت</div><div class="ssc-val gold" id="stockTotalVal">Rs 0</div></div>
+          <div class="ssc-stat"><div class="ssc-lbl" data-ur="کم اسٹاک" data-en="Low">کم اسٹاک</div><div class="ssc-val warn" id="stockLowCount">0</div></div>
         </div>
       </div>
 
@@ -1179,8 +1030,8 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
         </div>
         <div class="stock-filter-row">
           <button class="s-filter-btn active" data-filter="all">سب (<span id="sFilterAllCount">0</span>)</button>
-          <button class="s-filter-btn" data-filter="low">⚠️ کم اسٹاک (<span id="sFilterLowCount">0</span>)</button>
-          <button class="s-filter-btn" data-filter="out">🚫 ختم اسٹاک (<span id="sFilterOutCount">0</span>)</button>
+          <button class="s-filter-btn" data-filter="low">⚠️ کم (<span id="sFilterLowCount">0</span>)</button>
+          <button class="s-filter-btn" data-filter="out">🚫 ختم (<span id="sFilterOutCount">0</span>)</button>
         </div>
       </div>
 
@@ -1221,12 +1072,8 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
       <div class="card" style="padding:13px 14px;">
         <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
           <div>
-            <div style="font-size:13.5px;font-weight:700;color:var(--txt);" data-ur="📦 اسٹاک مینجمنٹ سسٹم" data-en="📦 Stock Management System">📦 اسٹاک مینجمنٹ سسٹم</div>
-            <div style="font-size:10px;color:var(--txt-3);margin-top:2px;" id="stockToggleSub"
-                 data-ur="اسٹاک ٹریکنگ، اسٹاک ٹیب اور آؤٹ آف اسٹاک کنٹرول"
-                 data-en="Inventory tracking, stock tab and out-of-stock limits">
-              اسٹاک ٹریکنگ، اسٹاک ٹیب اور آؤٹ آف اسٹاک کنٹرول
-            </div>
+            <div style="font-size:13.5px;font-weight:700;color:var(--txt);" data-ur="📦 اسٹاک مینجمنٹ" data-en="📦 Stock Management">📦 اسٹاک مینجمنٹ</div>
+            <div style="font-size:10px;color:var(--txt-3);margin-top:2px;" id="stockToggleSub">اسٹاک ٹریکنگ، اسٹاک ٹیب</div>
           </div>
           <button class="btn sm" id="stockToggleBtn" style="min-width:76px;font-weight:700;padding:7px 12px;border-radius:20px;"></button>
         </div>
@@ -1239,28 +1086,25 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
           <input id="setShopUr" class="full" dir="rtl" value="پاشا بلڈنگ میٹریل سپلائرز" placeholder="اردو نام" />
           <input id="setShopEn" class="full" value="PASHA BUILDING MATERIAL & SUPPLIERS" placeholder="Shop name (English)" />
           <input id="setOwner" class="full" value="غلام فرید بھٹو" placeholder="Owner name" />
-          <input id="setPhone" value="03003701905" maxlength="11" inputmode="numeric" placeholder="Phone (11 digits)" />
-          <input id="setPhone2" value="03313701905" maxlength="11" inputmode="numeric" placeholder="Phone 2 (optional, 11 digits)" />
+          <input id="setPhone" value="03003701905" maxlength="11" inputmode="numeric" placeholder="Phone" />
+          <input id="setPhone2" value="03313701905" maxlength="11" inputmode="numeric" placeholder="Phone 2" />
           <input id="setAddress" class="full" value="نزد واپڈا گریڈ اسٹیشن کوئٹہ روڈ، ڈیرہ مراد جمالی" placeholder="Address" />
-          <input id="setFooter" class="full" dir="rtl" value="شکریہ! دوبارہ تشریف لائیں" placeholder="رسید کا نوٹ" />
+          <input id="setFooter" class="full" dir="rtl" value="شکریہ! دوبارہ تشریف لائیں" placeholder="Footer" />
         </div>
         <button class="btn primary" id="saveSettingsBtn" data-ur="محفوظ کریں" data-en="Save">محفوظ کریں</button>
       </div>
       <div class="card">
         <div class="card-title" data-ur="Firebase سنک" data-en="Firebase Sync">Firebase سنک</div>
-        <div style="font-size:11.5px;color:var(--txt-3);line-height:1.85;margin-bottom:11px;"
-             data-ur="تمام بلز پہلے موبائل میں محفوظ ہوتے ہیں — آن لائن ہونے پر خودکار کلاؤڈ میں Sync ہو جاتے ہیں۔"
-             data-en="All bills saved offline first — auto-sync to cloud when online.">
-          تمام بلز پہلے موبائل میں محفوظ ہوتے ہیں — آن لائن ہونے پر خودکار کلاؤڈ میں Sync ہو جاتے ہیں۔
+        <div style="font-size:11.5px;color:var(--txt-3);line-height:1.85;margin-bottom:11px;">
+          <b style="color:var(--green);">🟢 Auto Sync فعال ہے</b> — تمام بلز خودکار طور پر پس منظر میں Sync ہو جاتے ہیں۔
         </div>
         <button class="btn green" id="syncAllBtn" data-ur="☁ ابھی Sync کریں" data-en="☁ Sync Now">☁ ابھی Sync کریں</button>
         <div style="height:9px"></div>
-        <button class="btn dark" id="pullBtn" data-ur="⬇ Firebase سے آئٹمز لائیں" data-en="⬇ Pull Items from Firebase">⬇ Firebase سے آئٹمز لائیں</button>
+        <button class="btn dark" id="pullBtn" data-ur="⬇ Firebase سے آئٹمز لائیں" data-en="⬇ Pull Items">⬇ Firebase سے آئٹمز لائیں</button>
       </div>
       <div class="card">
         <div class="card-title" data-ur="خطرناک زون" data-en="Danger Zone">خطرناک زون</div>
-        <button class="btn dark" id="resetBtn" style="color:var(--red);"
-                data-ur="تمام ڈیٹا ری سیٹ کریں" data-en="Reset All Data">تمام ڈیٹا ری سیٹ کریں</button>
+        <button class="btn dark" id="resetBtn" style="color:var(--red);" data-ur="تمام ڈیٹا ری سیٹ کریں" data-en="Reset All Data">تمام ڈیٹا ری سیٹ کریں</button>
       </div>
       <div style="text-align:center;font-size:9.5px;color:var(--txt-4);padding:6px 0 20px;line-height:1.9;">
         <b>پاشا بلڈنگ میٹریل سپلائرز</b><br>
@@ -1315,8 +1159,7 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
       <div class="card" style="padding:11px;position:relative;">
         <div class="form-grid" style="margin-bottom:0;">
           <input id="custName"  placeholder="کسٹمر کا نام" autocomplete="off" />
-          <input id="custPhone" type="tel" inputmode="numeric" maxlength="11"
-                 placeholder="فون نمبر" autocomplete="off" />
+          <input id="custPhone" type="tel" inputmode="numeric" maxlength="11" placeholder="فون نمبر" autocomplete="off" />
         </div>
         <div class="cust-suggest" id="custSuggest"></div>
       </div>
@@ -1329,8 +1172,8 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
           <input id="mUnit" placeholder="Unit" />
           <input id="mQty"  type="number" inputmode="decimal" min="0" step="any" placeholder="Qty" value="1" />
           <div class="price-pair">
-            <div class="am-field"><label data-ur="لاگت قیمت (Rs)" data-en="Cost Price (Rs)">لاگت قیمت (Rs)</label><input id="mCost" class="am-rate" type="number" inputmode="decimal" min="0" step="any" placeholder="0" /></div>
-            <div class="am-field"><label data-ur="فروخت قیمت (Rs)" data-en="Sell Price (Rs)">فروخت قیمت (Rs)</label><input id="mRate" class="am-rate" type="number" inputmode="decimal" min="0" step="any" placeholder="0" /></div>
+            <div class="am-field"><label data-ur="لاگت (Rs)" data-en="Cost (Rs)">لاگت (Rs)</label><input id="mCost" class="am-rate" type="number" inputmode="decimal" min="0" step="any" placeholder="0" /></div>
+            <div class="am-field"><label data-ur="فروخت (Rs)" data-en="Sell (Rs)">فروخت (Rs)</label><input id="mRate" class="am-rate" type="number" inputmode="decimal" min="0" step="any" placeholder="0" /></div>
           </div>
           <button class="btn primary" id="mAddBtn" style="padding:11px;grid-column:1/-1;" data-ur="شامل کریں" data-en="Add">شامل کریں</button>
         </div>
@@ -1340,7 +1183,7 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
         <div class="trow"><span data-ur="کل تعداد" data-en="Total Qty">کل تعداد</span><b id="tItems">0</b></div>
         <div class="trow"><span data-ur="سب ٹوٹل" data-en="Sub Total">سب ٹوٹل</span><b id="tSub">Rs 0</b></div>
         <div class="trow"><span data-ur="رعایت (Rs)" data-en="Discount (Rs)">رعایت (Rs)</span><input id="discInput" type="number" inputmode="decimal" value="0" /></div>
-        <div class="trow"><span data-ur="بھاڑا / مزدوری (Rs)" data-en="Mazdoori (Rs)">بھاڑا / مزدوری (Rs)</span><input id="freightInput" type="number" inputmode="decimal" value="0" /></div>
+        <div class="trow"><span data-ur="مزدوری (Rs)" data-en="Mazdoori (Rs)">مزدوری (Rs)</span><input id="freightInput" type="number" inputmode="decimal" value="0" /></div>
         <div class="trow grand"><span data-ur="کل رقم" data-en="GRAND TOTAL">کل رقم</span><b id="tGrand">Rs 0</b></div>
         <div class="pay-section">
           <div class="pay-section-title" data-ur="ادائیگی کی تفصیل" data-en="Payment Details">ادائیگی کی تفصیل</div>
@@ -1349,31 +1192,31 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
               <label data-ur="طریقہ کار" data-en="Method">طریقہ کار</label>
               <select id="payMethod">
                 <option value="Cash" data-ur="نقد رقم" data-en="Cash">نقد رقم</option>
-                <option value="Online / Bank" data-ur="بینک ٹرانسفر" data-en="Bank Transfer">بینک ٹرانسفر</option>
+                <option value="Online / Bank" data-ur="بینک" data-en="Bank">بینک ٹرانسفر</option>
                 <option value="JazzCash" data-ur="جاز کیش" data-en="JazzCash">جاز کیش</option>
                 <option value="EasyPaisa" data-ur="ایزی پیسہ" data-en="EasyPaisa">ایزی پیسہ</option>
-                <option value="Udhar" data-ur="ادھار کھاتہ" data-en="Credit Account">ادھار کھاتہ</option>
+                <option value="Udhar" data-ur="ادھار" data-en="Credit">ادھار کھاتہ</option>
               </select>
             </div>
             <div class="pay-field">
-              <label data-ur="ادائیگی کی حالت" data-en="Payment Status">ادائیگی کی حالت</label>
+              <label data-ur="ادائیگی کی حالت" data-en="Status">ادائیگی کی حالت</label>
               <select id="payStatus">
-                <option value="Full Paid" data-ur="مکمل ادا شدہ" data-en="Full Paid">مکمل ادا شدہ</option>
-                <option value="Half Paid" data-ur="جزوی ادا (ایڈوانس)" data-en="Partial / Advance">جزوی ادا (ایڈوانس)</option>
-                <option value="Unpaid" data-ur="غیر ادا شدہ (ادھار)" data-en="Unpaid (Due)">غیر ادا شدہ (ادھار)</option>
+                <option value="Full Paid" data-ur="مکمل ادا" data-en="Full Paid">مکمل ادا شدہ</option>
+                <option value="Half Paid" data-ur="جزوی ادا" data-en="Partial">جزوی ادا</option>
+                <option value="Unpaid" data-ur="ادھار" data-en="Unpaid">غیر ادا شدہ</option>
               </select>
             </div>
           </div>
           <div class="trow"><span data-ur="ادا شدہ (Rs)" data-en="Paid (Rs)">ادا شدہ (Rs)</span><input id="advanceInput" type="number" inputmode="decimal" value="0" /></div>
           <div class="quickfill">
-            <button type="button" data-fill="full"    data-ur="پوری" data-en="Full">پوری</button>
-            <button type="button" data-fill="half"    data-ur="آدھی" data-en="Half">آدھی</button>
-            <button type="button" data-fill="quarter" data-ur="ایک چوتھائی" data-en="¼">ایک چوتھائی</button>
-            <button type="button" data-fill="zero"    data-ur="صفر" data-en="Zero">صفر</button>
+            <button type="button" data-fill="full" data-ur="پوری" data-en="Full">پوری</button>
+            <button type="button" data-fill="half" data-ur="آدھی" data-en="Half">آدھی</button>
+            <button type="button" data-fill="quarter" data-ur="¼" data-en="¼">¼</button>
+            <button type="button" data-fill="zero" data-ur="صفر" data-en="0">صفر</button>
           </div>
           <div class="pay-preview" id="payPreview">
             <span class="dot"></span>
-            <span class="label" id="payPrevLabel" data-ur="بقایا" data-en="Baqaya">بقایا</span>
+            <span class="label" id="payPrevLabel" data-ur="بقایا" data-en="Due">بقایا</span>
             <span class="val" id="tRem">Rs 0</span>
           </div>
         </div>
@@ -1387,7 +1230,7 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
   <div class="sheet" id="baqayaSheet">
     <div class="sheet-head">
       <button class="iconbtn" data-close="baqayaSheet">←</button>
-      <div class="sheet-title" data-ur="بقایا والے کسٹمر" data-en="Baqaya Customers">بقایا والے کسٹمر</div>
+      <div class="sheet-title" data-ur="بقایا والے کسٹمر" data-en="Baqaya">بقایا والے کسٹمر</div>
     </div>
     <div class="sheet-body" id="baqayaBody"></div>
   </div>
@@ -1396,17 +1239,17 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
     <div class="sheet-head">
       <button class="iconbtn" data-close="receiptSheet">←</button>
       <div class="sheet-title" data-ur="رسید" data-en="Receipt">رسید</div>
-      <div class="badge pend" id="syncBadge">Not Synced</div>
+      <!-- AUTO SYNC LIVE BADGE -->
+      <div class="badge syncing" id="syncBadge">🔄 Syncing...</div>
     </div>
     <div class="sheet-body" style="padding:0;">
       <div class="paper-wrap"><div class="paper" id="receiptPaper"></div></div>
     </div>
     <div class="sheet-foot">
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:7px;margin-bottom:9px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:9px;">
         <button class="btn dark"  id="printBtn"  data-ur="🖨 پرنٹ" data-en="🖨 Print">🖨 پرنٹ</button>
         <button class="btn dark"  id="jpgBtn"    data-ur="🖼 JPG" data-en="🖼 JPG">🖼 JPG</button>
         <button class="btn wa"    id="waBtn"     data-ur="📱 واٹس" data-en="📱 WA">📱 واٹس</button>
-        <button class="btn green" id="syncBtn"   data-ur="☁ Sync" data-en="☁ Sync">☁ Sync</button>
       </div>
       <button class="btn dark" id="recvBtn" style="display:none;width:100%;margin-bottom:9px;" data-ur="💵 باقی رقم وصول کریں" data-en="💵 Receive Payment">💵 باقی رقم وصول کریں</button>
       <button class="btn primary big" id="newBillBtn" data-ur="نیا بل شروع کریں" data-en="START NEW BILL">نیا بل شروع کریں</button>
@@ -1427,13 +1270,13 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
           <label data-ur="تعداد" data-en="Quantity">تعداد</label>
           <div class="am-qty">
             <button type="button" id="mQtyMinus">−</button>
-            <input id="mQtyInp" type="tel" inputmode="decimal" pattern="[0-9]*[.]?[0-9]*" dir="ltr" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" name="qty_digits" value="1" style="direction:ltr !important;text-align:center;" />
+            <input id="mQtyInp" type="tel" inputmode="decimal" pattern="[0-9]*[.]?[0-9]*" dir="ltr" value="1" style="direction:ltr !important;text-align:center;" />
             <button type="button" id="mQtyPlus">+</button>
           </div>
         </div>
         <div class="am-field">
           <label data-ur="ریٹ (Rs)" data-en="Rate (Rs)">ریٹ (Rs)</label>
-          <input id="mRateInp" class="am-rate" type="text" inputmode="decimal" pattern="[0-9]*[.]?[0-9]*" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" name="rate_digits" value="0" />
+          <input id="mRateInp" class="am-rate" type="text" inputmode="decimal" value="0" />
         </div>
       </div>
       <div class="am-total">
@@ -1442,7 +1285,7 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
       </div>
       <div class="am-actions">
         <button class="btn dark" id="mCancelBtn" data-ur="منسوخ" data-en="Cancel">منسوخ</button>
-        <button class="btn primary" id="mConfirmBtn" data-ur="شامل کریں" data-en="Add to Cart">شامل کریں</button>
+        <button class="btn primary" id="mConfirmBtn" data-ur="شامل کریں" data-en="Add">شامل کریں</button>
       </div>
     </div>
   </div>
@@ -1456,17 +1299,17 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
           <div class="am-sub" id="pmTitleEn">Cement</div>
         </div>
       </div>
-      <div class="am-warn" id="pmWarn">
+      <div class="am-warn">
         <span class="ic">⚠️</span>
-        <span data-ur="اس آئٹم کی قیمت سیٹ نہیں ہے۔ پہلے قیمت سیٹ اپ کریں۔" data-en="Price not set. Set prices first.">اس آئٹم کی قیمت سیٹ نہیں ہے۔ پہلے قیمت سیٹ اپ کریں۔</span>
+        <span data-ur="قیمت سیٹ نہیں ہے۔" data-en="Price not set.">قیمت سیٹ نہیں ہے۔</span>
       </div>
       <div class="am-grid">
-        <div class="am-field"><label data-ur="لاگت قیمت (Rs)" data-en="Cost Price (Rs)">لاگت قیمت (Rs)</label><input id="pmCost" class="am-rate" type="number" inputmode="decimal" min="0" step="any" placeholder="0" /><div class="pm-old" id="pmOldCost"></div></div>
-        <div class="am-field"><label data-ur="فروخت قیمت (Rs)" data-en="Sell Price (Rs)">فروخت قیمت (Rs)</label><input id="pmSell" class="am-rate" type="number" inputmode="decimal" min="0" step="any" placeholder="0" /><div class="pm-old" id="pmOldSell"></div></div>
+        <div class="am-field"><label data-ur="لاگت (Rs)" data-en="Cost (Rs)">لاگت (Rs)</label><input id="pmCost" class="am-rate" type="number" inputmode="decimal" min="0" step="any" placeholder="0" /><div class="pm-old" id="pmOldCost"></div></div>
+        <div class="am-field"><label data-ur="فروخت (Rs)" data-en="Sell (Rs)">فروخت (Rs)</label><input id="pmSell" class="am-rate" type="number" inputmode="decimal" min="0" step="any" placeholder="0" /><div class="pm-old" id="pmOldSell"></div></div>
       </div>
       <div class="am-actions">
         <button class="btn dark" id="pmCancelBtn" data-ur="منسوخ" data-en="Cancel">منسوخ</button>
-        <button class="btn primary" id="pmSaveBtn" data-ur="محفوظ کریں" data-en="Save Setup">محفوظ کریں</button>
+        <button class="btn primary" id="pmSaveBtn" data-ur="محفوظ کریں" data-en="Save">محفوظ کریں</button>
       </div>
     </div>
   </div>
@@ -1476,33 +1319,33 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
       <div class="am-head">
         <div class="am-icon">Rs</div>
         <div class="am-title-wrap">
-          <div class="am-title" id="payTitleUr">قسط / وصولی درج کریں</div>
+          <div class="am-title" id="payTitleUr">قسط درج کریں</div>
           <div class="am-sub" id="payTitleEn">Receive Payment</div>
         </div>
       </div>
       <div class="am-grid" style="grid-template-columns:1fr 1fr;gap:9px;">
-        <div class="am-field"><label data-ur="کل باقی رقم (Rs)" data-en="Due (Rs)">کل باقی رقم (Rs)</label><div class="am-rate" id="payDue" style="display:flex;align-items:center;justify-content:center;min-height:46px;font-weight:800;color:var(--red);">Rs 0</div></div>
-        <div class="am-field"><label data-ur="وصول رقم (Rs) *" data-en="Received (Rs) *">وصول رقم (Rs) *</label><input id="payAmt" class="am-rate" type="text" inputmode="decimal" pattern="[0-9]*[.]?[0-9]*" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done" name="pay_digits" placeholder="0" /></div>
+        <div class="am-field"><label data-ur="باقی رقم (Rs)" data-en="Due (Rs)">باقی رقم (Rs)</label><div class="am-rate" id="payDue" style="display:flex;align-items:center;justify-content:center;min-height:46px;font-weight:800;color:var(--red);">Rs 0</div></div>
+        <div class="am-field"><label data-ur="وصول رقم (Rs) *" data-en="Received (Rs) *">وصول رقم (Rs) *</label><input id="payAmt" class="am-rate" type="text" inputmode="decimal" placeholder="0" /></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:9px;">
-        <div class="am-field"><label data-ur="طریقہ ادائیگی" data-en="Method">طریقہ ادائیگی</label>
+        <div class="am-field"><label data-ur="طریقہ" data-en="Method">طریقہ</label>
           <select id="payMethodSelect" style="height:44px;font-size:12px;">
-            <option value="Cash" data-ur="نقد (Cash)" data-en="Cash">نقد (Cash)</option>
-            <option value="Bank Transfer" data-ur="بینک ٹرانسفر (Bank)" data-en="Bank Transfer">بینک ٹرانسفر (Bank)</option>
-            <option value="Easypaisa" data-ur="ایزی پیسہ (Easypaisa)" data-en="Easypaisa">ایزی پیسہ (Easypaisa)</option>
-            <option value="JazzCash" data-ur="جاز کیش (JazzCash)" data-en="JazzCash">جاز کیش (JazzCash)</option>
-            <option value="Cheque" data-ur="چیک (Cheque)" data-en="Cheque">چیک (Cheque)</option>
+            <option value="Cash">نقد (Cash)</option>
+            <option value="Bank Transfer">بینک (Bank)</option>
+            <option value="Easypaisa">ایزی پیسہ</option>
+            <option value="JazzCash">جاز کیش</option>
+            <option value="Cheque">چیک</option>
           </select>
         </div>
-        <div class="am-field"><label data-ur="قسط تفصیل / نوٹ" data-en="Installment Note">قسط تفصیل / نوٹ</label><input id="payNote" placeholder="قسط نمبر 1" style="height:44px;font-size:12px;" /></div>
+        <div class="am-field"><label data-ur="تفصیل / نوٹ" data-en="Note">تفصیل / نوٹ</label><input id="payNote" placeholder="قسط نمبر 1" style="height:44px;font-size:12px;" /></div>
       </div>
       <div class="am-total" style="margin-top:9px;">
-        <span data-ur="ادائیگی کے بعد باقی" data-en="Due after payment">ادائیگی کے بعد باقی</span>
+        <span data-ur="بعد میں باقی" data-en="Due after">بعد میں باقی</span>
         <b id="payAfter" style="color:var(--gold);">Rs 0</b>
       </div>
       <div class="am-actions" style="grid-template-columns:1fr 1fr 1.4fr;margin-top:10px;">
         <button class="btn dark" id="payCancelBtn" data-ur="منسوخ" data-en="Cancel">منسوخ</button>
-        <button class="btn dark" id="payFullBtn" data-ur="پوری رقم" data-en="Full">پوری رقم</button>
+        <button class="btn dark" id="payFullBtn" data-ur="پوری" data-en="Full">پوری رقم</button>
         <button class="btn primary" id="payConfirmBtn" data-ur="وصول کریں" data-en="Receive">وصول کریں</button>
       </div>
     </div>
@@ -1510,12 +1353,10 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
 
   <div class="cf-bg" id="dupConfirmModal">
     <div class="cf-box">
-      <div class="cf-icon warn">
-        <svg viewBox="0 0 24 24"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      </div>
+      <div class="cf-icon warn"><svg viewBox="0 0 24 24"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
       <div class="cf-title" data-ur="یہی بل پہلے سے موجود ہے" data-en="Duplicate Bill">یہی بل پہلے سے موجود ہے</div>
       <div class="cf-msg warnmsg" id="dupMsg"></div>
-      <div class="cf-sub" data-ur="اگر یہ واقعی نیا بل ہے تو جاری رکھیں۔" data-en="If this is genuinely a new bill, continue.">اگر یہ واقعی نیا بل ہے تو جاری رکھیں۔</div>
+      <div class="cf-sub" data-ur="اگر واقعی نیا بل ہے تو جاری رکھیں۔" data-en="If this is genuinely a new bill, continue.">اگر واقعی نیا بل ہے تو جاری رکھیں۔</div>
       <div class="cf-actions">
         <button class="btn dark" id="dupCancelBtn" data-ur="منسوخ" data-en="Cancel">منسوخ</button>
         <button class="btn primary" id="dupOkBtn" data-ur="جاری رکھیں" data-en="Continue">جاری رکھیں</button>
@@ -1529,7 +1370,7 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
         <div class="am-icon">✏️</div>
         <div class="am-title-wrap">
           <div class="am-title" data-ur="آئٹم تبدیل کریں" data-en="Edit Item">آئٹم تبدیل کریں</div>
-          <div class="am-sub" data-ur="نام، قیمت یا یونٹ تبدیل کریں" data-en="Rename or update">نام، قیمت یا یونٹ تبدیل کریں</div>
+          <div class="am-sub" data-ur="نام، قیمت یا یونٹ" data-en="Rename or update">نام، قیمت یا یونٹ</div>
         </div>
       </div>
       <div class="form-leader-group" style="margin-top:10px;">
@@ -1554,12 +1395,12 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
         <div class="form-field">
           <label data-ur="کیٹیگری" data-en="Category">کیٹیگری</label>
           <select id="editCat" class="full">
-            <option value="Cement" data-ur="سیمنٹ" data-en="Cement">Cement</option>
-            <option value="Brick" data-ur="اینٹ" data-en="Brick">Brick</option>
-            <option value="Bajri" data-ur="بجری" data-en="Bajri">Bajri</option>
-            <option value="Reti" data-ur="ریت" data-en="Sand">Reti</option>
-            <option value="Sariya" data-ur="سریا" data-en="Steel">Sariya</option>
-            <option value="Other" data-ur="دیگر" data-en="Other">Other</option>
+            <option value="Cement">Cement</option>
+            <option value="Brick">Brick</option>
+            <option value="Bajri">Bajri</option>
+            <option value="Reti">Reti</option>
+            <option value="Sariya">Sariya</option>
+            <option value="Other">Other</option>
           </select>
         </div>
         <div class="form-grid-2">
@@ -1568,7 +1409,7 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
         </div>
         <div class="form-grid-2">
           <div class="form-field"><label data-ur="اسٹاک" data-en="Stock">اسٹاک</label><input id="editStock" type="number" inputmode="decimal" min="0" step="any" placeholder="0" /></div>
-          <div class="form-field"><label data-ur="الرٹ حد" data-en="Alert">الرٹ حد</label><input id="editMinStock" type="number" inputmode="decimal" min="0" step="any" placeholder="10" /></div>
+          <div class="form-field"><label data-ur="الرٹ" data-en="Alert">الرٹ</label><input id="editMinStock" type="number" inputmode="decimal" min="0" step="any" placeholder="10" /></div>
         </div>
       </div>
       <div class="am-actions" style="margin-top:14px;">
@@ -1580,21 +1421,16 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
 
   <div class="cf-bg" id="delConfirmModal">
     <div class="cf-box" style="max-width:360px;">
-      <div class="cf-icon warn">
-        <svg viewBox="0 0 24 24"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      </div>
+      <div class="cf-icon warn"><svg viewBox="0 0 24 24"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
       <div class="cf-title" id="delTitle">بل حذف کریں؟</div>
       <div class="cf-msg" id="delMsg"></div>
       <div class="del-stock-caution">
-        <div class="dsc-head">
-          <span>⚠️</span>
-          <b class="dsc-q" data-ur="کیا سامان کی مقدار اسٹاک میں واپس بحال کرنی ہے؟" data-en="Reverse Stock?">کیا سامان کی مقدار اسٹاک میں واپس بحال کرنی ہے؟</b>
-        </div>
+        <div class="dsc-head"><span>⚠️</span><b data-ur="کیا سامان اسٹاک میں واپس کرنا ہے؟" data-en="Reverse Stock?">کیا سامان اسٹاک میں واپس کرنا ہے؟</b></div>
         <div class="dsc-note" data-ur="اگر کسٹمر نے سامان واپس کر دیا ہے تو YES دبائیں۔" data-en="If customer returned items, click YES.">اگر کسٹمر نے سامان واپس کر دیا ہے تو YES دبائیں۔</div>
       </div>
       <div class="cf-actions" style="display:flex;flex-direction:column;gap:7px;">
-        <button class="btn green" id="delReverseYesBtn" style="padding:10px 8px;font-size:11px;font-weight:700;">✔ YES — بل حذف کریں اور اسٹاک واپس</button>
-        <button class="btn red" id="delReverseNoBtn" style="padding:10px 8px;font-size:11px;font-weight:700;">✖ NO — صرف بل حذف کریں</button>
+        <button class="btn green" id="delReverseYesBtn" style="padding:10px 8px;font-size:11px;font-weight:700;">✔ YES — حذف + اسٹاک واپس</button>
+        <button class="btn red" id="delReverseNoBtn" style="padding:10px 8px;font-size:11px;font-weight:700;">✖ NO — صرف حذف</button>
         <button class="btn dark" id="delCancelBtn" style="padding:8px;font-size:11px;">منسوخ</button>
       </div>
     </div>
@@ -1605,16 +1441,16 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
       <div class="am-head">
         <div class="am-icon">📦</div>
         <div class="am-title-wrap">
-          <div class="am-title" data-ur="مال / اسٹاک داخل کریں" data-en="Add Stock">مال / اسٹاک داخل کریں</div>
-          <div class="am-sub" data-ur="سپلائی یا نئی کھیپ" data-en="Record incoming">سپلائی یا نئی کھیپ</div>
+          <div class="am-title" data-ur="اسٹاک داخل کریں" data-en="Add Stock">اسٹاک داخل کریں</div>
+          <div class="am-sub" data-ur="نئی کھیپ" data-en="New supply">نئی کھیپ</div>
         </div>
       </div>
       <div style="margin-top:8px;">
-        <label style="font-size:10px;font-weight:700;color:var(--txt-3);margin-bottom:4px;display:block;" data-ur="آئٹم منتخب کریں" data-en="Select Item">آئٹم منتخب کریں</label>
+        <label style="font-size:10px;font-weight:700;color:var(--txt-3);margin-bottom:4px;display:block;">آئٹم منتخب کریں</label>
         <select id="stockInItemSelect" class="full" style="font-size:12.5px;padding:9px;"></select>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;background:var(--glass-2);border:1px solid var(--glass-border);border-radius:9px;margin:8px 0;">
-        <span style="font-size:10.5px;color:var(--txt-3);" data-ur="موجودہ اسٹاک:" data-en="Current:">موجودہ اسٹاک:</span>
+        <span style="font-size:10.5px;color:var(--txt-3);">موجودہ:</span>
         <b style="font-size:13px;color:var(--gold);" id="simCurStock">0</b>
       </div>
       <div class="am-field">
@@ -1628,8 +1464,8 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
         <div class="quick-qty-btn quick-sim-btn" data-val="500">+500</div>
       </div>
       <div class="am-grid" style="grid-template-columns:1fr 1fr;gap:8px;">
-        <div class="am-field"><label data-ur="خرید ریٹ (Rs)" data-en="Cost (Rs)">خرید ریٹ (Rs)</label><input id="simCost" class="am-rate" type="number" inputmode="decimal" placeholder="0" /></div>
-        <div class="am-field"><label data-ur="فروخت ریٹ (Rs)" data-en="Sell (Rs)">فروخت ریٹ (Rs)</label><input id="simRate" class="am-rate" type="number" inputmode="decimal" placeholder="0" /></div>
+        <div class="am-field"><label data-ur="خرید (Rs)" data-en="Cost">خرید (Rs)</label><input id="simCost" class="am-rate" type="number" inputmode="decimal" placeholder="0" /></div>
+        <div class="am-field"><label data-ur="فروخت (Rs)" data-en="Sell">فروخت (Rs)</label><input id="simRate" class="am-rate" type="number" inputmode="decimal" placeholder="0" /></div>
       </div>
       <div class="am-actions" style="margin-top:10px;">
         <button class="btn dark" id="simCancelBtn" data-ur="منسوخ" data-en="Cancel">منسوخ</button>
@@ -1648,10 +1484,10 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
         </div>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center;padding:7px 10px;background:var(--glass-2);border:1px solid var(--glass-border);border-radius:9px;margin:8px 0;">
-        <span style="font-size:10.5px;color:var(--txt-3);" data-ur="سسٹم:" data-en="System:">سسٹم میں درج:</span>
+        <span style="font-size:10.5px;color:var(--txt-3);">سسٹم:</span>
         <b style="font-size:13px;color:var(--txt-2);" id="adjCurStock">0</b>
       </div>
-      <div class="am-field"><label data-ur="اصل موجود تعداد *" data-en="Actual Qty *">اصل موجود تعداد *</label><input id="adjQty" class="am-rate" type="number" inputmode="decimal" min="0" step="any" placeholder="0" /></div>
+      <div class="am-field"><label data-ur="اصل موجود *" data-en="Actual *">اصل موجود *</label><input id="adjQty" class="am-rate" type="number" inputmode="decimal" min="0" step="any" placeholder="0" /></div>
       <div class="am-field" style="margin-top:8px;"><label data-ur="الرٹ حد" data-en="Alert">الرٹ حد</label><input id="adjMin" class="am-rate" type="number" inputmode="decimal" min="0" step="any" placeholder="10" /></div>
       <div class="am-actions" style="margin-top:10px;">
         <button class="btn dark" id="adjCancelBtn" data-ur="منسوخ" data-en="Cancel">منسوخ</button>
@@ -1660,22 +1496,18 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
     </div>
   </div>
 
-  <!-- PRINT PRESET GUIDE BANNER -->
   <div class="print-preset-banner" id="printPresetBanner">
     <div class="print-preset-box">
-      <div class="ppb-title">🖨️ <span data-ur="پرنٹ سیٹنگ گائیڈ" data-en="Print Settings Guide">پرنٹ سیٹنگ گائیڈ</span></div>
+      <div class="ppb-title">🖨️ <span data-ur="پرنٹ سیٹنگ گائیڈ" data-en="Print Settings">پرنٹ سیٹنگ گائیڈ</span></div>
       <div class="ppb-list">
-        <div class="ppb-row"><span class="key" data-ur="صفحات (Pages)" data-en="Pages">صفحات (Pages)</span><span class="val">Custom -1</span></div>
-        <div class="ppb-row"><span class="key" data-ur="رنگ (Color)" data-en="Color">رنگ (Color)</span><span class="val">Black & White</span></div>
-        <div class="ppb-row"><span class="key" data-ur="پیپر سائز" data-en="Paper Size">پیپر سائز</span><span class="val">Statement</span></div>
-        <div class="ppb-row"><span class="key" data-ur="فی شیٹ صفحات" data-en="Pages per sheet">فی شیٹ صفحات</span><span class="val">1</span></div>
-        <div class="ppb-row"><span class="key" data-ur="مارجن (Margin)" data-en="Margin">مارجن (Margin)</span><span class="val">None</span></div>
-        <div class="ppb-row"><span class="key" data-ur="اسکیل (Scale)" data-en="Scale">اسکیل (Scale)</span><span class="val">Custom 200</span></div>
+        <div class="ppb-row"><span class="key" data-ur="صفحات" data-en="Pages">صفحات</span><span class="val">Custom -1</span></div>
+        <div class="ppb-row"><span class="key" data-ur="رنگ" data-en="Color">رنگ</span><span class="val">B&W</span></div>
+        <div class="ppb-row"><span class="key" data-ur="پیپر" data-en="Paper">پیپر</span><span class="val">Statement</span></div>
+        <div class="ppb-row"><span class="key" data-ur="فی شیٹ" data-en="Per sheet">فی شیٹ</span><span class="val">1</span></div>
+        <div class="ppb-row"><span class="key" data-ur="مارجن" data-en="Margin">مارجن</span><span class="val">None</span></div>
+        <div class="ppb-row"><span class="key" data-ur="اسکیل" data-en="Scale">اسکیل</span><span class="val">200</span></div>
       </div>
-      <div class="ppb-hint" data-ur="یہ سیٹنگز براؤزر میں خودکار لاگو نہیں ہو سکتیں — پرنٹ ڈائیلاگ کھلنے پر یہی آپشن منتخب کریں۔ ایک بار سیٹ کرنے کے بعد Chrome انہیں یاد رکھے گا۔"
-           data-en="Browser auto-apply nahi kar sakta — print dialog mein yeh options select karein. Chrome yaad rakhega.">
-        یہ سیٹنگز براؤزر میں خودکار لاگو نہیں ہو سکتیں — پرنٹ ڈائیلاگ کھلنے پر یہی آپشن منتخب کریں۔ ایک بار سیٹ کرنے کے بعد Chrome انہیں یاد رکھے گا۔
-      </div>
+      <div class="ppb-hint" data-ur="پرنٹ ڈائیلاگ میں یہی سیٹنگ منتخب کریں۔" data-en="Select these in print dialog.">پرنٹ ڈائیلاگ میں یہی سیٹنگ منتخب کریں۔</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
         <button class="btn dark" id="printPresetCancelBtn" data-ur="منسوخ" data-en="Cancel">منسوخ</button>
         <button class="btn primary" id="printPresetOkBtn" data-ur="پرنٹ کھولیں" data-en="Open Print">پرنٹ کھولیں</button>
@@ -1690,9 +1522,9 @@ body.desktop .stock-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12
 
 <script type="module">
 /* ============================================================
-   PASHA BUILDING MATERIAL & SUPPLIERS — POS v3.7
+   PASHA BUILDING MATERIAL & SUPPLIERS — POS v4.0
    NEW FIREBASE: pasha-building-materials
-   PRINT PRESET: Statement B&W, Scale 200, No Margin
+   AUTO SYNC + LIVE PAYMENT + BUG FIXES
    ============================================================ */
 
 const FIREBASE_CONFIG = {
@@ -1748,11 +1580,7 @@ const DEFAULT_ITEMS = [
   { id:'it_brick',     name:'Brick',          ur:'اینٹ',        unit:'عدد',   rate:15,    costPrice:12,   cat:'Brick',  stockQty:8000, minStock:1000 },
   { id:'it_bajri',     name:'Bajri',          ur:'بجری',        unit:'ٹرالی', rate:12000, costPrice:10500,cat:'Bajri',  stockQty:12, minStock:2 },
   { id:'it_reti',      name:'Reti / Sand',    ur:'ریت / ریتی',  unit:'ٹرالی', rate:11000, costPrice:9500, cat:'Reti',   stockQty:15, minStock:3 },
-  { id:'it_sariya',    name:'Sariya',         ur:'سریا',        unit:'کلو',   rate:280,   costPrice:265,  cat:'Sariya', stockQty:1200, minStock:150 },
-  { id:'it_tr_girder', name:'TR Girder',      ur:'ٹی آر گارڈر', unit:'فٹ',    rate:680,   costPrice:630,  cat:'Other',  stockQty:85, minStock:15 },
-  { id:'it_roof',      name:'Roof / Slab',    ur:'روف / سلیب',  unit:'عدد',   rate:1400,  costPrice:1250, cat:'Other',  stockQty:45, minStock:8 },
-  { id:'it_taas',      name:'Taas',           ur:'ٹاس',         unit:'عدد',   rate:220,   costPrice:190,  cat:'Other',  stockQty:120, minStock:20 },
-  { id:'it_baans',     name:'Baans (Bamboo)', ur:'بانس',        unit:'عدد',   rate:350,   costPrice:300,  cat:'Other',  stockQty:150, minStock:25 }
+  { id:'it_sariya',    name:'Sariya',         ur:'سریا',        unit:'کلو',   rate:280,   costPrice:265,  cat:'Sariya', stockQty:1200, minStock:150 }
 ];
 
 const DEFAULT_SETTINGS = {
@@ -1849,7 +1677,7 @@ if (deskBtn){
     const on = document.body.classList.toggle('desktop');
     deskBtn.classList.toggle('on', on);
     localStorage.setItem('pasha_desktop', on ? '1' : '0');
-    toast(on ? t('ڈیسک ٹاپ موڈ آن', 'Desktop ON') : t('موبائل موڈ آن', 'Mobile ON'));
+    toast(on ? t('ڈیسک ٹاپ موڈ', 'Desktop') : t('موبائل موڈ', 'Mobile'));
   });
 }
 
@@ -1873,15 +1701,6 @@ function applyLanguage(lang){
     const val = opt.getAttribute(`data-${lang}`);
     if (val) opt.textContent = val;
   });
-  if ($('#searchInput')) $('#searchInput').placeholder = lang === 'en' ? 'Search items...' : 'آئٹم تلاش کریں...';
-  if ($('#histSearch')) $('#histSearch').placeholder = lang === 'en' ? 'Search: Phone / Bill # / Name' : 'تلاش: فون / بل نمبر / نام';
-  if ($('#custName')) $('#custName').placeholder = lang === 'en' ? 'Customer Name' : 'کسٹمر کا نام';
-  if ($('#custPhone')) $('#custPhone').placeholder = lang === 'en' ? 'Phone Number' : 'فون نمبر';
-  if ($('#newUr')) $('#newUr').placeholder = lang === 'en' ? 'Urdu Name' : 'اردو نام';
-  if ($('#newName')) $('#newName').placeholder = lang === 'en' ? 'Item Name (English)' : 'انگلش نام';
-  if ($('#newUnit')) $('#newUnit').placeholder = lang === 'en' ? 'Unit (Bag / Item / Ft)' : 'یونٹ (بوری / عدد / فٹ)';
-  if ($('#stockSearchInput')) $('#stockSearchInput').placeholder = lang === 'en' ? 'Search in stock...' : 'اسٹاک میں تلاش کریں...';
-
   renderCats(); renderItems(); renderItemsList(); renderCart();
   updateCartBar(); updateBaqayaTotal();
   if (!histSelectMode) renderHistory();
@@ -1970,10 +1789,7 @@ const CATS = ['All', 'Cement', 'Brick', 'Bajri', 'Reti', 'Sariya', 'Other'];
 const UNIT_MAP = {
   'بوری':{ur:'بوری',en:'Bag'},'عدد':{ur:'عدد',en:'Item'},'ٹرالی':{ur:'ٹرالی',en:'Trolley'},
   'فٹ':{ur:'فٹ',en:'Ft'},'کلو':{ur:'کلو',en:'Kg'},'سلیب':{ur:'سلیب',en:'Slab'},
-  'ٹن':{ur:'ٹن',en:'Ton'},'ہزار':{ur:'ہزار',en:'1000'},'گز':{ur:'گز',en:'Yard'},'لیٹر':{ur:'لیٹر',en:'Ltr'},
-  'Bag':{ur:'بوری',en:'Bag'},'Item':{ur:'عدد',en:'Item'},'Trolley':{ur:'ٹرالی',en:'Trolley'},
-  'Ft':{ur:'فٹ',en:'Ft'},'Feet':{ur:'فٹ',en:'Ft'},'Kg':{ur:'کلو',en:'Kg'},'Slab':{ur:'سلیب',en:'Slab'},
-  'Ton':{ur:'ٹن',en:'Ton'},'1000':{ur:'ہزار',en:'1000'},'Yard':{ur:'گز',en:'Yard'},'Ltr':{ur:'لیٹر',en:'Ltr'}
+  'ٹن':{ur:'ٹن',en:'Ton'},'ہزار':{ur:'ہزار',en:'1000'},'گز':{ur:'گز',en:'Yard'},'لیٹر':{ur:'لیٹر',en:'Ltr'}
 };
 function getUnitName(unit, lang=LANG){
   if (!unit) return '';
@@ -1983,8 +1799,8 @@ function getUnitName(unit, lang=LANG){
 }
 const CAT_LABELS = {
   All:{ur:'سب',en:'All'},Cement:{ur:'سیمنٹ',en:'Cement'},Brick:{ur:'اینٹ',en:'Brick'},
-  Bajri:{ur:'بجری',en:'Bajri'},Reti:{ur:'ریت / ریتی',en:'Sand'},Sariya:{ur:'سریا',en:'Steel'},
-  Other:{ur:'دیگر سامان',en:'Other'}
+  Bajri:{ur:'بجری',en:'Bajri'},Reti:{ur:'ریت',en:'Sand'},Sariya:{ur:'سریا',en:'Steel'},
+  Other:{ur:'دیگر',en:'Other'}
 };
 function getCatName(cat, lang=LANG){
   if (!cat) return '';
@@ -2093,7 +1909,7 @@ if ($('#pmSaveBtn')) $('#pmSaveBtn').addEventListener('click', () => {
   if (!priceTargetItem) return;
   const cost = parseFloat($('#pmCost').value) || 0;
   const sell = parseFloat($('#pmSell').value) || 0;
-  if (sell <= 0) return toast(t('فروخت قیمت درج کریں', 'Enter sell price'));
+  if (sell <= 0) return toast(t('قیمت درج کریں', 'Enter price'));
   priceTargetItem.costPrice = cost; priceTargetItem.rate = sell;
   const idx = items.findIndex(i => i.id === priceTargetItem.id);
   if (idx > -1) items[idx] = { ...priceTargetItem };
@@ -2135,7 +1951,7 @@ if ($('#mConfirmBtn')) $('#mConfirmBtn').addEventListener('click', () => {
   if (!modalItem) return;
   const qty = parseFloat($('#mQtyInp').value) || 0;
   const rate = parseFloat($('#mRateInp').value) || 0;
-  if (qty <= 0) return toast(t('تعداد 0 سے زیادہ', 'Qty > 0'));
+  if (qty <= 0) return toast(t('تعداد > 0', 'Qty > 0'));
   if (isStockEnabled()){
     const available = Number(modalItem.stockQty) || 0;
     if (available <= 0){ toast(LANG === 'en' ? 'OUT OF STOCK!' : 'اسٹاک ختم!'); return; }
@@ -2220,7 +2036,7 @@ function renderCart(){
 if ($('#clearCartBtn')) $('#clearCartBtn').addEventListener('click', () => {
   if (!cart.length) return;
   cart = []; renderCart(); updateCartBar();
-  toast(t('بل صاف ✔', 'Cleared ✔'));
+  toast(t('صاف ✔', 'Cleared ✔'));
 });
 
 if ($('#mAddBtn')) $('#mAddBtn').addEventListener('click', () => {
@@ -2380,7 +2196,11 @@ function finalizeBill(billData){
   openSheet('receiptSheet');
   updateBaqayaTotal(); renderHistory(); renderReports();
   toast(t('بل بن گیا ✔', 'Bill generated ✔'));
-  if (fbReady) syncBillToFirebase(billData);
+  // IMMEDIATE SYNC
+  if (fbReady) {
+    updateSyncBadgeUI('syncing');
+    syncBillToFirebase(billData);
+  }
 }
 
 if ($('#genBillBtn')) $('#genBillBtn').addEventListener('click', () => {
@@ -2436,6 +2256,9 @@ if ($('#dupOkBtn')) $('#dupOkBtn').addEventListener('click', () => {
   if (pendingBillData){ finalizeBill(pendingBillData); pendingBillData = null; }
 });
 
+/* ============================================================
+   RECEIPT — LIVE RENDER (auto-update on payment)
+   ============================================================ */
 function renderReceipt(b){
   currentBill = b;
   const advance = Number(b.advance) || 0;
@@ -2464,7 +2287,7 @@ function renderReceipt(b){
   const instHtml = (b.payments && b.payments.length > 0) ? `
     <div class="p-inst-box">
       <div class="p-inst-title">
-        <span>📋 ${LANG === 'en' ? 'PAYMENT LEDGER' : 'اقساط و وصولی کا ریکارڈ'}</span>
+        <span>📋 ${LANG === 'en' ? 'PAYMENT LEDGER' : 'اقساط و وصولی'}</span>
         <span style="font-size:7.5px;color:#64748b;">${b.payments.length} ${LANG === 'en' ? 'Payments' : 'ادائیگیاں'}</span>
       </div>
       <table class="p-inst-table">
@@ -2523,7 +2346,7 @@ function renderReceipt(b){
       ${b.freight ? `<div class="p-tr"><span>${t('مزدوری','Mazdoori')}</span><b>+ Rs ${fmt(b.freight)}</b></div>` : ''}
       <div class="p-tr grand"><span>${t('کل رقم','TOTAL')}</span><b>Rs ${fmt(b.total)}</b></div>
       <div class="p-tr paid"><span>${t('ادا شدہ','Paid')} (${b.payMethod})</span><b>Rs ${fmt(advance)}</b></div>
-      ${remaining > 0 ? `<div class="p-tr due"><span>${t('باقی (ادھار)','Balance Due')}</span><b>Rs ${fmt(remaining)}</b></div>` : ''}
+      ${remaining > 0 ? `<div class="p-tr due"><span>${t('باقی','Balance Due')}</span><b>Rs ${fmt(remaining)}</b></div>` : ''}
     </div>
     ${instHtml}
     <div class="p-note-line">${settings.footer}</div>
@@ -2532,43 +2355,95 @@ function renderReceipt(b){
       <div class="sig">${t('دستخط دکاندار','Shop Sign')}</div>
       <div class="dev"><b>Developer: Khalid Ali</b><br>WhatsApp: 03003919555</div>
     </div>`;
-  const sb = $('#syncBadge');
-  if (sb){ sb.textContent = b.synced ? 'Synced' : 'Not Synced'; sb.className = 'badge ' + (b.synced ? 'ok' : 'pend'); }
+
+  // Update recvBtn
   const recvBtn = $('#recvBtn');
   if (recvBtn){
-    if (remaining > 0){ recvBtn.style.display = 'block'; recvBtn.textContent = `💵 ${t('باقی رقم وصول کریں','Receive:')} Rs ${fmt(remaining)}`; }
+    if (remaining > 0){ recvBtn.style.display = 'block'; recvBtn.textContent = `💵 ${t('باقی وصول','Receive:')} Rs ${fmt(remaining)}`; }
     else recvBtn.style.display = 'none';
+  }
+
+  // Update sync badge based on synced state
+  if (b.synced) updateSyncBadgeUI('synced');
+  else if (fbReady) updateSyncBadgeUI('syncing');
+  else updateSyncBadgeUI('offline');
+}
+
+/* ============================================================
+   AUTO SYNC UI — LIVE BADGE
+   ============================================================ */
+function updateSyncBadgeUI(state){
+  const sb = $('#syncBadge');
+  if (!sb) return;
+  if (state === 'synced'){
+    sb.textContent = '✔ Synced';
+    sb.className = 'badge ok';
+  } else if (state === 'syncing'){
+    sb.textContent = '🔄 Syncing...';
+    sb.className = 'badge syncing';
+  } else if (state === 'offline'){
+    sb.textContent = '📴 Offline';
+    sb.className = 'badge pend';
+  } else {
+    sb.textContent = '⚠️ Pending';
+    sb.className = 'badge pend';
+  }
+  // Update net dot
+  const nd = $('#netDot');
+  if (nd){
+    nd.classList.remove('on', 'syncing');
+    if (state === 'syncing') nd.classList.add('syncing');
+    else if (state === 'synced' && fbReady) nd.classList.add('on');
+  }
+  // Update sb-dot
+  const sbd = $('#sbDot');
+  if (sbd){
+    sbd.classList.remove('on', 'syncing');
+    if (state === 'syncing') sbd.classList.add('syncing');
+    else if (state === 'synced' && fbReady) sbd.classList.add('on');
+  }
+  // Update sb-sync text
+  const sbs = $('#sbSync');
+  if (sbs){
+    sbs.classList.remove('ok', 'off', 'syncing');
+    if (state === 'syncing'){ sbs.textContent = 'SYNCING'; sbs.classList.add('syncing'); }
+    else if (state === 'synced' && fbReady){ sbs.textContent = 'CONNECTED'; sbs.classList.add('ok'); }
+    else { sbs.textContent = 'OFFLINE'; sbs.classList.add('off'); }
   }
 }
 
 /* ============================================================
-   🖨️ PRINT BUTTON — WITH PRESET GUIDE BANNER
+   PRINT + WHATSAPP + JPG
    ============================================================ */
 function doPrint(){
   const printArea = $('#printArea');
   const paper = $('#receiptPaper');
   if (!printArea || !paper) return;
   printArea.innerHTML = paper.outerHTML;
-  // Small delay to allow fonts to render
   setTimeout(() => window.print(), 100);
 }
 
 if ($('#printBtn')) $('#printBtn').addEventListener('click', () => {
-  // Show preset guide banner first
   const banner = $('#printPresetBanner');
   if (banner) banner.classList.add('show');
 });
-
 if ($('#printPresetCancelBtn')) $('#printPresetCancelBtn').addEventListener('click', () => {
   const banner = $('#printPresetBanner');
   if (banner) banner.classList.remove('show');
 });
-
 if ($('#printPresetOkBtn')) $('#printPresetOkBtn').addEventListener('click', () => {
   const banner = $('#printPresetBanner');
   if (banner) banner.classList.remove('show');
   doPrint();
 });
+
+function loadScript(src){
+  return new Promise((res, rej) => {
+    const s = document.createElement('script');
+    s.src = src; s.onload = res; s.onerror = rej;
+    document.head.appendChild(s);
+  });
+}
 
 if ($('#waBtn')) $('#waBtn').addEventListener('click', async () => {
   if (!currentBill) return toast(t('پہلے بل بنائیں', 'Generate first'));
@@ -2654,14 +2529,6 @@ function buildWhatsAppMsg(b){
   return L.join('\n');
 }
 
-function loadScript(src){
-  return new Promise((res, rej) => {
-    const s = document.createElement('script');
-    s.src = src; s.onload = res; s.onerror = rej;
-    document.head.appendChild(s);
-  });
-}
-
 if ($('#jpgBtn')) $('#jpgBtn').addEventListener('click', async () => {
   if (typeof html2canvas === 'undefined'){
     try{ await loadScript('html2canvas.min.js'); }
@@ -2678,10 +2545,6 @@ if ($('#jpgBtn')) $('#jpgBtn').addEventListener('click', async () => {
   } catch (err){ console.error(err); toast(t('ناکام', 'Failed')); }
 });
 
-if ($('#syncBtn')) $('#syncBtn').addEventListener('click', () => {
-  if (currentBill) syncBillToFirebase(currentBill, true);
-});
-
 if ($('#newBillBtn')) $('#newBillBtn').addEventListener('click', () => {
   closeSheet('receiptSheet');
   cart = []; resetCustomerFields();
@@ -2692,7 +2555,7 @@ if ($('#newBillBtn')) $('#newBillBtn').addEventListener('click', () => {
 function updateBaqayaTotal(){
   const totalDue = bills.reduce((sum, b) => sum + (Number(b.remaining) || 0), 0);
   const btn = $('#baqayaBtn');
-  if (btn) btn.innerHTML = `<span>💳 ${t('کل بقایا رجسٹر','Total Baqaya')}</span> • <b>Rs ${fmt(totalDue)}</b>`;
+  if (btn) btn.innerHTML = `<span>💳 ${t('کل بقایا','Total Baqaya')}</span> • <b>Rs ${fmt(totalDue)}</b>`;
 }
 
 function openBaqayaSheet(){
@@ -2746,6 +2609,7 @@ function openBaqayaSheet(){
 }
 if ($('#baqayaBtn')) $('#baqayaBtn').addEventListener('click', openBaqayaSheet);
 
+/* PAY MODAL — LIVE UPDATE FIX */
 let payTargetBill = null;
 function openPayModal(b){
   payTargetBill = b;
@@ -2773,12 +2637,15 @@ if ($('#payAmt')) $('#payAmt').addEventListener('input', (e) => {
   const pay = parseFloat(e.target.value) || 0;
   $('#payAfter').textContent = `Rs ${fmt(Math.max(0, due - pay))}`;
 });
+
 if ($('#payConfirmBtn')) $('#payConfirmBtn').addEventListener('click', () => {
   if (!payTargetBill) return;
   const pay = parseFloat($('#payAmt').value) || 0;
   if (pay <= 0) return toast(t('رقم درج کریں', 'Enter amount'));
   const due = Number(payTargetBill.remaining) || 0;
   const actualPay = Math.min(due, pay);
+
+  // Ensure payments array
   if (!Array.isArray(payTargetBill.payments)){
     payTargetBill.payments = [];
     if (Number(payTargetBill.advance) > 0){
@@ -2791,24 +2658,43 @@ if ($('#payConfirmBtn')) $('#payConfirmBtn').addEventListener('click', () => {
       });
     }
   }
+
   const instNum = payTargetBill.payments.length + 1;
   const note = ($('#payNote')?.value || '').trim() || (LANG === 'en' ? `Installment #${instNum}` : `قسط نمبر ${instNum}`);
   const method = ($('#payMethodSelect')?.value || 'Cash');
+
   payTargetBill.payments.push({ id: 'pay_' + Date.now(), date: new Date().toISOString(), amount: actualPay, method, note });
   payTargetBill.advance = payTargetBill.payments.reduce((s, p) => s + (Number(p.amount) || 0), 0);
   payTargetBill.remaining = Math.max(0, (Number(payTargetBill.total) || 0) - payTargetBill.advance);
   payTargetBill.payStatus = payTargetBill.remaining <= 0 ? 'Full Paid' : 'Half Paid';
   payTargetBill.synced = false;
+
   save(LS_BILLS, bills);
   closePayModal();
-  updateBaqayaTotal(); renderHistory(); renderReports();
+
+  // ✅ LIVE UPDATE: Receipt + Ledger + History + Reports
   currentBill = payTargetBill;
-  renderReceipt(payTargetBill);
-  openSheet('receiptSheet');
+  renderReceipt(payTargetBill);   // Re-render receipt with new payment
+  updateBaqayaTotal();
+  renderHistory();
+  renderReports();
+
+  // Open receipt sheet if not open
+  if (!$('#receiptSheet').classList.contains('open')) openSheet('receiptSheet');
+
   toast(LANG === 'en' ? `Rs ${fmt(actualPay)} received ✔` : `Rs ${fmt(actualPay)} وصول ✔`);
+
   if ($('#baqayaSheet').classList.contains('open')) openBaqayaSheet();
-  if (fbReady) syncBillToFirebase(payTargetBill);
+
+  // ✅ AUTO SYNC — immediate
+  if (fbReady) {
+    updateSyncBadgeUI('syncing');
+    syncBillToFirebase(payTargetBill);
+  } else {
+    updateSyncBadgeUI('offline');
+  }
 });
+
 if ($('#recvBtn')) $('#recvBtn').addEventListener('click', () => {
   if (currentBill && (Number(currentBill.remaining) || 0) > 0) openPayModal(currentBill);
 });
@@ -2887,9 +2773,6 @@ if ($('#editSaveBtn')) $('#editSaveBtn').addEventListener('click', () => {
   if (rate <= 0) return toast(t('قیمت درج کریں', 'Enter rate'));
   it.ur = ur || name; it.name = name || ur; it.unit = unit; it.cat = cat;
   it.costPrice = cost; it.rate = rate; it.stockQty = stock; it.minStock = minStock;
-  cart.forEach(ci => {
-    if (ci.id === it.id){ ci.name = it.name; ci.ur = it.ur; ci.unit = it.unit; ci.rate = it.rate; ci.costPrice = it.costPrice; }
-  });
   save(LS_ITEMS, items);
   renderItems(); renderItemsList(); renderStockScreen(); renderCart(); updateCartBar();
   $('#editItemModal').classList.remove('open');
@@ -2981,6 +2864,10 @@ function renderHistory(){
     else if (advance > 0){ bClass += 'half'; bText = t('آدھی','Partial'); }
     else { bClass += 'due'; bText = t('ادھار','Due'); }
     const isSel = histSelection.has(b.id);
+    let syncBadge = '';
+    if (b.synced) syncBadge = `<span class="badge ok">Synced</span>`;
+    else if (fbReady) syncBadge = `<span class="badge syncing">Syncing</span>`;
+    else syncBadge = `<span class="badge pend">Offline</span>`;
     return `<div class="hist-card ${isSel ? 'selected' : ''}" data-bill-id="${b.id}">
       <div class="hist-row-top">
         ${histSelectMode ? `<div class="hist-check ${isSel ? 'on' : ''}" data-bill-id="${b.id}">
@@ -2991,7 +2878,7 @@ function renderHistory(){
             <span class="hist-no">Bill #${b.no}</span>
             <span class="hist-cust">${b.customer}</span>
             <span class="${bClass}">${bText}</span>
-            <span class="badge ${b.synced ? 'ok' : 'pend'}">${b.synced ? 'Synced' : 'Local'}</span>
+            ${syncBadge}
           </div>
           ${b.phone ? `<div class="hist-phone"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>${b.phone}</div>` : ''}
           <div class="hist-bottom" style="margin-top:6px;">
@@ -3097,9 +2984,9 @@ function renderReports(){
       <div class="rep-val">Rs ${fmt(totalSales)}</div>
       <div class="rep-sub">${filtered.length} ${t('بلز', 'bills')}</div>
     </div>
-    <div class="rep-card"><div class="rep-label">${t('وصول رقم','Collected')}</div><div class="rep-val green">Rs ${fmt(totalPaid)}</div><div class="rep-sub">${t('نقد / آن لائن','Cash / Online')}</div></div>
-    <div class="rep-card"><div class="rep-label">${t('بقایا ادھار','Due')}</div><div class="rep-val red">Rs ${fmt(totalDue)}</div><div class="rep-sub">${t('گاہکوں کے ذمہ','Receivables')}</div></div>
-    <div class="rep-card full"><div class="rep-label">${t('خالص منافع','Estimated Profit')}</div><div class="rep-val gold">Rs ${fmt(totalProfit)}</div><div class="rep-sub">${t('فروخت منفی لاگت','Sale − Cost')}</div></div>`;
+    <div class="rep-card"><div class="rep-label">${t('وصول','Collected')}</div><div class="rep-val green">Rs ${fmt(totalPaid)}</div><div class="rep-sub">${t('نقد / آن لائن','Cash / Online')}</div></div>
+    <div class="rep-card"><div class="rep-label">${t('بقایا','Due')}</div><div class="rep-val red">Rs ${fmt(totalDue)}</div><div class="rep-sub">${t('گاہکوں','Receivables')}</div></div>
+    <div class="rep-card full"><div class="rep-label">${t('خالص منافع','Profit')}</div><div class="rep-val gold">Rs ${fmt(totalProfit)}</div><div class="rep-sub">${t('فروخت − لاگت','Sale − Cost')}</div></div>`;
 }
 $$('#reportTabs button').forEach(btn => btn.addEventListener('click', () => {
   $$('#reportTabs button').forEach(b => b.classList.remove('active'));
@@ -3209,7 +3096,7 @@ function renderStockScreen(){
         <div class="sc-qty-row">
           <div class="sc-qty-main"><span class="sc-qty-num">${fmt(stock)}</span><span class="sc-unit">${uLabel}</span></div>
           <div class="sc-val-box">
-            <div class="sc-val-lbl">${t('کل مالیت','Value')}</div>
+            <div class="sc-val-lbl">${t('مالیت','Value')}</div>
             <div class="sc-val-amt">Rs ${fmt(val)}</div>
           </div>
         </div>
@@ -3220,7 +3107,7 @@ function renderStockScreen(){
         </div>
       </div>
       <div class="sc-actions">
-        <button class="btn sm gold sc-btn-in" data-id="${it.id}">+ ${t('اسٹاک داخل','Stock In')}</button>
+        <button class="btn sm gold sc-btn-in" data-id="${it.id}">+ ${t('اسٹاک','Stock In')}</button>
         <button class="btn sm ghost sc-btn-adj" data-id="${it.id}">✏️ ${t('درست','Adjust')}</button>
       </div>
     </div>`;
@@ -3312,7 +3199,9 @@ if ($('#adjSaveBtn')) $('#adjSaveBtn').addEventListener('click', () => {
   toast(t('درست ✔', 'Adjusted ✔'));
 });
 
-/* FIREBASE */
+/* ============================================================
+   FIREBASE — AUTO SYNC ENGINE
+   ============================================================ */
 let fbDb = null, fbAuth = null, fbApi = null, fbReady = false;
 let syncInProgress = false;
 let cachedUsage = null;
@@ -3338,10 +3227,7 @@ async function initFirebase(){
     catch(e){ console.warn('Auth:', e.message); }
 
     fbReady = true;
-    if ($('#netDot')) $('#netDot').classList.add('on');
-    if ($('#sbDot')) $('#sbDot').classList.add('on');
-    const sbSync = $('#sbSync');
-    if (sbSync){ sbSync.textContent = 'CONNECTED'; sbSync.className = 'sb-sync ok'; }
+    updateSyncBadgeUI('synced');
     console.log('[Firebase] Connected to pasha-building-materials ✔');
 
     setTimeout(autoSyncPendingBills, 800);
@@ -3349,20 +3235,23 @@ async function initFirebase(){
     setTimeout(fetchFirebaseUsage, 2000);
   } catch(err){
     console.error('[Firebase] Init failed:', err);
-    const sbSync = $('#sbSync');
-    if (sbSync){ sbSync.textContent = 'OFFLINE'; sbSync.className = 'sb-sync off'; }
+    updateSyncBadgeUI('offline');
   }
 }
 
 async function autoSyncPendingBills(){
   if (!fbReady || !fbApi || syncInProgress) return;
   const pending = bills.filter(b => !b.synced);
-  if (!pending.length){ updateSyncBadge(); return; }
+  if (!pending.length){ updateSyncBadgeUI('synced'); return; }
   syncInProgress = true;
+  updateSyncBadgeUI('syncing');
   let ok = 0;
-  for (const b of pending){ if (await syncBillToFirebase(b)) ok++; }
+  for (const b of pending){
+    const success = await syncBillToFirebase(b, false);
+    if (success) ok++;
+  }
   syncInProgress = false;
-  updateSyncBadge();
+  updateSyncBadgeUI(ok > 0 ? 'synced' : 'pending');
   if (ok > 0){
     if (!histSelectMode) renderHistory(); else renderHistToolbar();
     setTimeout(fetchFirebaseUsage, 800);
@@ -3371,6 +3260,7 @@ async function autoSyncPendingBills(){
 
 async function syncBillToFirebase(bill, manual=false){
   if (!fbReady || !fbApi){
+    updateSyncBadgeUI('offline');
     if (manual) toast(t('Firebase تیار نہیں', 'Firebase not ready'));
     return false;
   }
@@ -3384,38 +3274,17 @@ async function syncBillToFirebase(bill, manual=false){
     const idx = bills.findIndex(b => b.id === bill.id);
     if (idx > -1){ bills[idx].synced = true; save(LS_BILLS, bills); }
     if (currentBill && currentBill.id === bill.id){
-      const sb = $('#syncBadge');
-      if (sb){ sb.textContent = 'Synced'; sb.className = 'badge ok'; }
+      updateSyncBadgeUI('synced');
     }
-    updateSyncBadge();
-    if (manual) toast(t('کلاؤڈ ✔', 'Cloud ✔'));
+    if (!histSelectMode) renderHistory();
     return true;
   } catch(err){
     console.error('Sync error:', err);
+    updateSyncBadgeUI('pending');
     if (manual) toast(t('Sync ناکام', 'Sync failed'));
     return false;
   }
 }
-
-function updateSyncBadge(){
-  const pending = bills.filter(b => !b.synced).length;
-  const badge = $('#syncPendingBadge');
-  const btn = $('#syncBadgeBtn');
-  if (!badge || !btn) return;
-  if (pending > 0){
-    badge.textContent = pending > 9 ? '9+' : pending;
-    badge.classList.add('show');
-    btn.style.display = 'grid';
-  } else {
-    badge.classList.remove('show');
-    btn.style.display = 'none';
-  }
-}
-if ($('#syncBadgeBtn')) $('#syncBadgeBtn').addEventListener('click', () => {
-  if (!fbReady) return toast(t('Firebase تیار نہیں', 'Firebase not ready'));
-  toast(t('Sync...', 'Syncing...'), 2000);
-  autoSyncPendingBills();
-});
 
 async function pushItemsToFirebase(){
   if (!fbReady || !fbApi) return;
@@ -3481,9 +3350,19 @@ async function fetchFirebaseUsage(){
     updateStorageBar(totalBytes);
   } catch(e){ console.warn('[Storage]', e); updateStorageBar(estimateLocalBytes()); }
 }
+
+// ✅ AUTO SYNC INTERVALS
 setInterval(fetchFirebaseUsage, 5 * 60 * 1000);
-window.addEventListener('online', () => { setTimeout(autoSyncPendingBills, 500); setTimeout(fetchFirebaseUsage, 1500); });
-setInterval(() => { if (fbReady && !syncInProgress) autoSyncPendingBills(); }, 30000);
+setInterval(() => { if (fbReady && !syncInProgress) autoSyncPendingBills(); }, 5000); // 5s par check
+window.addEventListener('online', () => {
+  toast(t('آن لائن ✔', 'Online ✔'), 1500);
+  setTimeout(autoSyncPendingBills, 300);
+  setTimeout(fetchFirebaseUsage, 1500);
+});
+window.addEventListener('offline', () => {
+  updateSyncBadgeUI('offline');
+  toast(t('آف لائن ⚠️', 'Offline ⚠️'), 1500);
+});
 
 (function boot(){
   setupUnitChips('#newUnitChips', '#newUnit');
@@ -3492,16 +3371,12 @@ setInterval(() => { if (fbReady && !syncInProgress) autoSyncPendingBills(); }, 3
   applyLanguage(LANG);
   fillSettingsForm();
   updateCartBar();
-  updateSyncBadge();
   updateBaqayaTotal();
   renderReports();
   updateStorageBar(estimateLocalBytes());
+  updateSyncBadgeUI('offline');
 
   if ($('#brandUrdu')) $('#brandUrdu').textContent = settings.shopUr;
-  const brandSubEl = $('#brandSub');
-  if (brandSubEl){
-    brandSubEl.textContent = `${settings.owner} • ${settings.phone}${settings.phone2 ? ' / ' + settings.phone2 : ''}`;
-  }
 
   initFirebase();
 })();
