@@ -8,19 +8,41 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400..700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="html2canvas.min.js"></script>
+<!-- Local Offline Libs with CDN Fallback -->
+<script src="libs/html2canvas.min.js"></script>
+<script src="libs/firebase-app-compat.js"></script>
+<script src="libs/firebase-database-compat.js"></script>
+<script src="libs/firebase-auth-compat.js"></script>
 <script>
 if (typeof html2canvas === 'undefined') {
   document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"><\/script>');
 }
+if (typeof firebase === 'undefined') {
+  document.write('<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"><\/script>');
+  document.write('<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"><\/script>');
+  document.write('<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"><\/script>');
+}
 </script>
 
-<!-- Firebase Compat SDKs (Works 100% on file:// and http:// without CORS block) -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-
 <style>
+@font-face {
+  font-family: 'Noto Nastaliq Urdu';
+  src: url('fonts/NotoNastaliqUrdu.ttf') format('truetype');
+  font-weight: 400 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('fonts/Poppins-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
 :root{
   --bg-1:#0f172a;--bg-card:#1e293b;--bg-step:#0f172a;
   --solid-border:#334155;--solid-border-2:#475569;
@@ -183,6 +205,22 @@ body.light .btn.gold{
   color:#ffffff !important;
   border:1px solid rgba(0,0,0,.15);
 }
+
+/* Stock In Button Crisp Theme (Upside & Downside) */
+#stockAddQuickBtn, .sc-btn-in{
+  background:linear-gradient(135deg,#059669,#047857) !important;
+  color:#ffffff !important;
+  font-weight:800 !important;
+  border:1px solid #10b981 !important;
+  box-shadow:0 2px 8px rgba(16,185,129,.35) !important;
+}
+#stockAddQuickBtn *, .sc-btn-in *{
+  color:#ffffff !important;
+}
+#stockAddQuickBtn:active, .sc-btn-in:active{
+  transform:scale(.96);filter:brightness(.95);
+}
+
 
 /* LIVE INSTALLMENT RECEIPT ALERT & FLASH */
 .receipt-live-badge{
@@ -1353,11 +1391,36 @@ function load(k, fb){
 function save(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
 
 const DEFAULT_ITEMS = [
-  { id:'it_cement', name:'Cement', ur:'سیمنٹ', unit:'بوری', rate:1350, costPrice:1280, cat:'Cement', stockQty:250, minStock:25 },
-  { id:'it_brick',  name:'Brick',  ur:'اینٹ',  unit:'عدد',  rate:15,   costPrice:12,   cat:'Brick',  stockQty:8000, minStock:1000 },
-  { id:'it_bajri',  name:'Bajri',  ur:'بجری',  unit:'ٹرالی', rate:12000, costPrice:10500, cat:'Bajri', stockQty:12, minStock:2 },
-  { id:'it_reti',   name:'Reti',   ur:'ریت',   unit:'ٹرالی', rate:11000, costPrice:9500, cat:'Reti',   stockQty:15, minStock:3 },
-  { id:'it_sariya', name:'Sariya', ur:'سریا',  unit:'کلو',   rate:280,   costPrice:265,  cat:'Sariya', stockQty:1200, minStock:150 }
+  { id:'it_1794669146636', name:'Lucky Cement', ur:'لکی سیمنٹ', unit:'بوری', rate:1300, costPrice:1000, cat:'Cement', stockQty:95, minStock:10 },
+  { id:'it_1794679883923', name:'Bajri', ur:'Bajri', unit:'ٹرالی', rate:12000, costPrice:9000, cat:'Bajri', stockQty:4990, minStock:10 }
+];
+
+const DEFAULT_BILLS = [
+  {
+    advance: 6500, customer: "kp", date: "2026-11-15T13:32:35.223Z", discount: 0, freight: 0,
+    id: "bill_1794749555223",
+    items: [{ costPrice: 1000, id: "it_1794669146636", itemId: "it_1794669146636", name: "Lucky Cement", qty: 5, rate: 1300, unit: "بوری", ur: "لکی سیمنٹ" }],
+    no: 3, payMethod: "Cash", payStatus: "Full Paid",
+    payments: [
+      { amount: 600, date: "2026-11-15T13:32:45.980Z", id: "pay_1794749565980", method: "Cash", note: "Installment #1" },
+      { amount: 1000, date: "2026-11-15T13:32:52.952Z", id: "pay_1794749572952", method: "Cash", note: "Installment #2" },
+      { amount: 900, date: "2026-11-15T13:32:58.889Z", id: "pay_1794749578889", method: "Cash", note: "Installment #3" },
+      { amount: 4000, date: "2026-11-15T13:33:02.141Z", id: "pay_1794749582141", method: "Cash", note: "Installment #4" }
+    ],
+    phone: "03114447772", qty: 5, remaining: 0, shop: "PASHA BUILDING MATERIAL & SUPPLIERS", subtotal: 6500, synced: true, total: 6500, updatedAt: 1794749582155
+  },
+  {
+    advance: 12000, customer: "KP", date: "2026-11-15T04:01:15.655Z", discount: 0, freight: 0,
+    id: "bill_1794715275655",
+    items: [{ costPrice: 9000, id: "it_1794679883923", itemId: "it_1794679883923", name: "Bajri", qty: 1, rate: 12000, unit: "ٹرالی", ur: "Bajri" }],
+    no: 11, payMethod: "Cash", payStatus: "Full Paid",
+    payments: [
+      { amount: 6000, date: "2026-11-15T04:01:21.928Z", id: "pay_1794715281928", method: "Cash", note: "Installment #1" },
+      { amount: 1000, date: "2026-11-15T04:01:33.130Z", id: "pay_1794715293130", method: "Cash", note: "Installment #2" },
+      { amount: 5000, date: "2026-11-15T04:01:43.018Z", id: "pay_1794715303018", method: "Cash", note: "Installment #3" }
+    ],
+    phone: "03001234567", qty: 1, remaining: 0, shop: "PASHA BUILDING MATERIAL & SUPPLIERS", subtotal: 12000, synced: true, total: 12000, updatedAt: 1794715303030
+  }
 ];
 
 const DEFAULT_SETTINGS = {
@@ -1369,11 +1432,21 @@ const DEFAULT_SETTINGS = {
   phone2:  '03313701905',
   address: 'نزد واپڈا گریڈ اسٹیشن کوئٹہ روڈ، ڈیرہ مراد جمالی',
   footer:  'شکریہ! دوبارہ تشریف لائیں',
-  billNo:  1
+  billNo:  12
 };
 
 let items       = load(LS_ITEMS, DEFAULT_ITEMS);
-let bills       = load(LS_BILLS, []);
+let bills       = load(LS_BILLS, DEFAULT_BILLS);
+
+// Purge legacy demo items if present in localStorage
+if (Array.isArray(items) && items.some(x => x.id === 'it_cement' || x.id === 'it_brick')){
+  items = JSON.parse(JSON.stringify(DEFAULT_ITEMS));
+  save(LS_ITEMS, items);
+}
+if (!Array.isArray(bills) || bills.length === 0){
+  bills = JSON.parse(JSON.stringify(DEFAULT_BILLS));
+  save(LS_BILLS, bills);
+}
 let settings    = Object.assign({}, DEFAULT_SETTINGS, load(LS_SET, {}));
 let cart        = [];
 let activeCat   = 'All';
@@ -2304,6 +2377,17 @@ async function saveReceiptJpg(){
   if (!currentBill) return toast(t('کوئی رسید موجود نہیں', 'No receipt found'));
   toast(t('تصویر بن رہی ہے...', 'Generating JPG...'), 2500);
 
+  // Native Android App bridge
+  if (window.Android && typeof window.Android.saveBase64Image === 'function'){
+    try {
+      const canvas = await generateReceiptCanvas();
+      const base64 = canvas.toDataURL('image/jpeg', 0.95);
+      const filename = `Pasha-Bill-${currentBill.no}.jpg`;
+      window.Android.saveBase64Image(base64, filename);
+      return;
+    } catch(e){ console.warn('Native save failed, fallback:', e); }
+  }
+
   try {
     const canvas = await generateReceiptCanvas();
     const filename = `Pasha-Bill-${currentBill.no}.jpg`;
@@ -2340,6 +2424,17 @@ if ($('#jpgBtn')) $('#jpgBtn').addEventListener('click', saveReceiptJpg);
 async function shareReceiptViaWhatsApp(){
   if (!currentBill) return toast(t('پہلے بل بنائیں', 'Generate first'));
   toast(t('رسید تصویر تیار ہو رہی ہے...', 'Preparing image...'), 2500);
+
+  // Native Android App bridge (Direct Easypaisa style photo share!)
+  if (window.Android && typeof window.Android.shareImage === 'function'){
+    try {
+      const canvas = await generateReceiptCanvas();
+      const base64 = canvas.toDataURL('image/jpeg', 0.95);
+      const shareTitle = `${settings.shopUr || 'پاشا بلڈنگ میٹریل'} - Bill #${currentBill.no}`;
+      window.Android.shareImage(base64, shareTitle);
+      return;
+    } catch(e){ console.warn('Native share failed, fallback:', e); }
+  }
 
   try {
     const canvas = await generateReceiptCanvas();
@@ -3190,6 +3285,115 @@ function withTimeout(promise, ms = 4500){
   });
 }
 
+let isPullingFromFb = false;
+async function pullFromFirebase(){
+  if (!navigator.onLine || isPullingFromFb) return;
+  isPullingFromFb = true;
+  try {
+    const resItems = await withTimeout(fetch(`${RTDB_BASE}/items.json`), 4500);
+    if (resItems.ok){
+      const data = await resItems.json();
+      if (data && typeof data === 'object'){
+        const fetched = Object.values(data).filter(x => x && x.id);
+        if (fetched.length > 0){
+          items = fetched.map(i => ({
+            ...i,
+            costPrice: Number(i.costPrice) || Math.round(Number(i.rate || 0) * 0.9),
+            rate: Number(i.rate) || 0,
+            stockQty: Number(i.stockQty) || 0
+          }));
+          save(LS_ITEMS, items);
+          if (typeof renderCats === 'function') renderCats();
+          if (typeof renderItems === 'function') renderItems();
+          if (typeof renderItemsList === 'function') renderItemsList();
+          if (typeof renderStockInventory === 'function') renderStockInventory();
+          if (typeof updateStorageBar === 'function') updateStorageBar(estimateLocalBytes());
+        }
+      }
+    }
+  } catch(e){ console.warn('[Firebase] Pull items note:', e.message); }
+
+  try {
+    const resBills = await withTimeout(fetch(`${RTDB_BASE}/bills.json`), 4500);
+    if (resBills.ok){
+      const bData = await resBills.json();
+      if (bData && typeof bData === 'object'){
+        const fetchedBills = Object.values(bData).filter(x => x && x.id);
+        if (fetchedBills.length > 0){
+          fetchedBills.sort((a,b) => (new Date(b.date || 0)) - (new Date(a.date || 0)));
+          bills = fetchedBills;
+          save(LS_BILLS, bills);
+          if (typeof renderHistory === 'function') renderHistory();
+          if (typeof renderKhata === 'function') renderKhata();
+          if (typeof renderReports === 'function') renderReports();
+          if (typeof updateBaqayaTotal === 'function') updateBaqayaTotal();
+          if (typeof updateStorageBar === 'function') updateStorageBar(estimateLocalBytes());
+        }
+      }
+    }
+  } catch(e){ console.warn('[Firebase] Pull bills note:', e.message); }
+  isPullingFromFb = false;
+}
+
+let listenersAttached = false;
+function attachFirebaseRealtimeListeners(){
+  if (!fbDb || listenersAttached) return;
+  listenersAttached = true;
+
+  // 1. Live Realtime Items Listener (Instant sync across GitHub & APK)
+  fbDb.ref('items').on('value', snap => {
+    try {
+      const data = snap.val();
+      if (data && typeof data === 'object'){
+        const fetched = Object.values(data).filter(x => x && x.id);
+        if (fetched.length > 0){
+          items = fetched.map(i => ({
+            ...i,
+            costPrice: Number(i.costPrice) || Math.round(Number(i.rate || 0) * 0.9),
+            rate: Number(i.rate) || 0,
+            stockQty: Number(i.stockQty) || 0
+          }));
+          save(LS_ITEMS, items);
+          if (typeof renderCats === 'function') renderCats();
+          if (typeof renderItems === 'function') renderItems();
+          if (typeof renderItemsList === 'function') renderItemsList();
+          if (typeof renderStockInventory === 'function') renderStockInventory();
+          if (typeof updateStorageBar === 'function') updateStorageBar(estimateLocalBytes());
+        }
+      }
+    } catch(e){ console.warn('[RTDB Items sync]:', e); }
+  });
+
+  // 2. Live Realtime Bills Listener (Instant sync across GitHub & APK)
+  fbDb.ref('bills').on('value', snap => {
+    try {
+      const data = snap.val();
+      if (data && typeof data === 'object'){
+        const fetchedBills = Object.values(data).filter(x => x && x.id);
+        if (fetchedBills.length > 0){
+          fetchedBills.sort((a,b) => (new Date(b.date || 0)) - (new Date(a.date || 0)));
+          bills = fetchedBills;
+          save(LS_BILLS, bills);
+          if (typeof renderHistory === 'function') renderHistory();
+          if (typeof renderKhata === 'function') renderKhata();
+          if (typeof renderReports === 'function') renderReports();
+          if (typeof updateBaqayaTotal === 'function') updateBaqayaTotal();
+          if (typeof updateStorageBar === 'function') updateStorageBar(estimateLocalBytes());
+
+          // If current receipt is open and updated on other device, live-refresh receipt
+          if (currentBill){
+            const updated = bills.find(b => b.id === currentBill.id);
+            if (updated && updated.updatedAt !== currentBill.updatedAt){
+              currentBill = updated;
+              if (typeof renderReceipt === 'function') renderReceipt(updated);
+            }
+          }
+        }
+      }
+    } catch(e){ console.warn('[RTDB Bills sync]:', e); }
+  });
+}
+
 function initFirebase(){
   if (typeof firebase === 'undefined'){
     console.warn('[Firebase] SDK not available offline');
@@ -3205,13 +3409,15 @@ function initFirebase(){
 
     fbAuth.signInAnonymously().catch(e => console.warn('[Auth note]:', e.message));
 
-    // Monitor connectivity
+    // Monitor connectivity & attach realtime listeners
     fbDb.ref('.info/connected').on('value', snap => {
       const isOnline = snap.val() === true;
       if (isOnline){
         fbReady = true;
         updateGlobalSyncUI('connected');
         console.log('[Firebase] Connected to RTDB ✔');
+        pullFromFirebase();
+        attachFirebaseRealtimeListeners();
       } else {
         updateGlobalSyncUI(navigator.onLine ? 'connected' : 'offline');
       }
@@ -3220,12 +3426,21 @@ function initFirebase(){
     if (navigator.onLine){
       fbReady = true;
       updateGlobalSyncUI('connected');
+      pullFromFirebase();
+      attachFirebaseRealtimeListeners();
     }
   } catch(err){
     console.warn('[Firebase] Init note:', err);
     updateGlobalSyncUI(navigator.onLine ? 'connected' : 'offline');
   }
 }
+
+// Window tab switch re-check
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && navigator.onLine){
+    pullFromFirebase();
+  }
+});
 
 // Targeted Event-Driven Sync (Only fires on actual changes)
 async function syncBillToFirebase(bill, manual=false){
