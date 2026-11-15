@@ -26,7 +26,13 @@ if (typeof firebase === 'undefined') {
 
 <style>
 @font-face {
-  font-family: 'Noto Nastaliq Urdu';
+  font-family: 'Jameel Noori Nastaleeq';
+  src: url('fonts/JameelNooriNastaleeq.ttf') format('truetype');
+  font-weight: 400 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu';
   src: url('fonts/NotoNastaliqUrdu.ttf') format('truetype');
   font-weight: 400 700;
   font-display: swap;
@@ -75,7 +81,7 @@ input,select,button,textarea{font-family:inherit;color:inherit;}
   background:linear-gradient(118deg,#064e3b 0%,#047857 52%,#065f46 100%);
   border-bottom:2px solid #d6ad55;box-shadow:0 3px 10px rgba(0,0,0,.2);}
 .brand{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:2px;}
-.brand .urdu{font-family:'Noto Nastaliq Urdu',serif;font-size:14.5px;line-height:2.0;
+.brand .urdu{font-family:'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu',serif;font-size:14.5px;line-height:2.0;
   color:#fff7d6;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   margin:0;text-shadow:0 1px 3px rgba(0,0,0,.6);}
 .brand-owner-badge{display:inline-flex;align-items:center;gap:4px;
@@ -151,13 +157,13 @@ body.light .storage-bar .sb-track{background:rgba(15,23,42,.1);}
 .item-card .warn-tag{position:absolute;top:6px;right:6px;font-size:9px;
   background:rgba(245,158,11,.2);color:#f59e0b;border:1px solid rgba(245,158,11,.4);
   padding:1px 6px;border-radius:6px;font-weight:800;}
-.ic-ur{font-family:'Noto Nastaliq Urdu',serif;font-size:16px;line-height:2.0;color:var(--gold);font-weight:700;}
+.ic-ur{font-family:'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu',serif;font-size:16px;line-height:2.0;color:var(--gold);font-weight:700;}
 .ic-name{font-size:10.5px;color:var(--txt-3);margin-top:-3px;font-weight:500;}
 .ic-bottom{display:flex;align-items:baseline;gap:4px;margin-top:8px;}
 .ic-rate{font-size:14px;font-weight:800;color:var(--txt);}
 .ic-unit{font-size:10px;color:var(--txt-4);font-weight:600;}
 .empty{text-align:center;padding:40px 16px;color:var(--txt-4);font-size:13px;
-  font-family:'Noto Nastaliq Urdu',serif;line-height:2.2;}
+  font-family:'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu',serif;line-height:2.2;}
 
 .card{background:var(--bg-card);border:1.5px solid var(--solid-border);
   border-radius:14px;padding:13px;margin-bottom:12px;box-shadow:var(--shadow);}
@@ -310,7 +316,7 @@ body.light .btn.gold{
 .ilist-item{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--solid-border);}
 .ilist-item:last-child{border-bottom:0;padding-bottom:0;}
 .ilist-info{flex:1;min-width:0;}
-.ilist-ur{font-family:'Noto Nastaliq Urdu',serif;font-size:14px;line-height:1.9;color:var(--txt);font-weight:700;}
+.ilist-ur{font-family:'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu',serif;font-size:14px;line-height:1.9;color:var(--txt);font-weight:700;}
 .ilist-sub{font-size:10px;color:var(--txt-4);margin-top:-2px;}
 .ilist-prices{display:flex;flex-direction:column;gap:1px;text-align:right;}
 .ilist-rate{font-size:12px;font-weight:800;color:var(--gold);white-space:nowrap;}
@@ -358,7 +364,7 @@ body.light .btn.gold{
 
 .citem{background:var(--bg-card);border:1.5px solid var(--solid-border);border-radius:12px;padding:10px;margin-bottom:8px;}
 .citem-top{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
-.citem-name{flex:1;font-family:'Noto Nastaliq Urdu',serif;font-size:14.5px;line-height:1.9;color:var(--txt);font-weight:700;}
+.citem-name{flex:1;font-family:'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu',serif;font-size:14.5px;line-height:1.9;color:var(--txt);font-weight:700;}
 .citem-name span{font-family:'Poppins',sans-serif;font-size:10px;color:var(--txt-4);font-weight:500;margin-left:4px;}
 .citem-row{display:flex;align-items:center;gap:8px;}
 .qtybox{display:flex;align-items:center;background:var(--bg-step);border:1px solid var(--solid-border);border-radius:8px;overflow:hidden;}
@@ -413,7 +419,7 @@ body.light .btn.gold{
 .am-icon{width:40px;height:40px;border-radius:10px;flex-shrink:0;
   background:linear-gradient(135deg,var(--gold),var(--gold-2));
   display:grid;place-items:center;color:#1c1917;font-weight:900;font-size:15px;}
-.am-title{font-family:'Noto Nastaliq Urdu',serif;font-size:16px;line-height:2.0;
+.am-title{font-family:'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu',serif;font-size:16px;line-height:2.0;
   color:var(--gold);font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .am-sub{font-size:10px;color:var(--txt-3);margin-top:-3px;}
 .am-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:11px;}
@@ -442,19 +448,19 @@ body.light .btn.gold{
 .p-stamp.partial{border-color:#c2410c;color:#c2410c;}
 .p-stamp.credit{border-color:#a16207;color:#a16207;}
 .p-stamp .stamp-en{font-family:'Poppins',sans-serif;font-weight:900;letter-spacing:0.5px;display:inline-block;direction:ltr;}
-.p-stamp .stamp-ur{font-family:'Noto Nastaliq Urdu',serif !important;letter-spacing:0 !important;
+.p-stamp .stamp-ur{font-family:'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu',serif !important;letter-spacing:0 !important;
   direction:rtl !important;display:inline-block;margin:0 5px;font-size:11.5px;line-height:1.5;font-weight:800;}
 .p-stamp .stamp-due{font-family:'Poppins',sans-serif;font-weight:800;display:inline-block;direction:ltr;}
 .p-head{text-align:center;padding-bottom:5px;border-bottom:1.5px solid #0f172a;}
-.p-urdu{font-family:'Noto Nastaliq Urdu',serif !important;font-size:15px !important;line-height:2.1 !important;
+.p-urdu{font-family:'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu',serif !important;font-size:15px !important;line-height:2.1 !important;
   font-weight:800 !important;color:#0f172a !important;margin-bottom:1px !important;}
 .p-shop{font-size:8px !important;font-weight:900 !important;letter-spacing:.6px !important;
   color:#0f172a !important;margin-bottom:3px !important;}
-.p-owner-line{font-family:'Noto Nastaliq Urdu',serif;font-size:12px;line-height:1.8;
+.p-owner-line{font-family:'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu',serif;font-size:12px;line-height:1.8;
   font-weight:800;color:#0f172a;margin:2px 0 1px;}
 .p-phones-clean{display:flex;justify-content:center;gap:10px;margin:4px 0;
   font-size:8.5px;font-weight:800;color:#0f172a;border-top:1px dotted #cbd5e1;border-bottom:1px dotted #cbd5e1;padding:3px 0;}
-.p-addr-line{font-family:'Noto Nastaliq Urdu',sans-serif !important;
+.p-addr-line{font-family:'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu',sans-serif !important;
   font-size:9px !important;line-height:1.9 !important;color:#334155 !important;
   margin-top:2px !important;direction:rtl !important;text-align:center !important;}
 .p-info{display:flex;justify-content:space-between;font-size:9.5px;color:#1e293b;
@@ -477,7 +483,7 @@ table.p-items td.r,table.p-items th.r{text-align:right;}
 .p-tr.grand b{font-size:13.5px;font-weight:900;}
 .p-tr.paid b{color:#15803d;}
 .p-tr.due b{color:#b91c1c;}
-.p-note-line{text-align:center;font-family:'Noto Nastaliq Urdu',serif !important;
+.p-note-line{text-align:center;font-family:'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu',serif !important;
   font-size:11.5px !important;line-height:2.0 !important;color:#0f172a;font-weight:800;
   margin-top:6px;padding-top:5px;border-top:1px dashed #94a3b8;letter-spacing:0 !important;direction:rtl;}
 .p-foot{display:flex;justify-content:space-between;align-items:flex-end;
@@ -579,7 +585,7 @@ body.light .badge.paid{color:#15803d;}
 .stock-card.low{border-color:rgba(245,158,11,.45);}
 .stock-card.out{border-color:rgba(239,68,68,.45);}
 .sc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
-.sc-ur{font-family:'Noto Nastaliq Urdu',serif;font-size:13.5px;line-height:1.9;font-weight:800;color:var(--txt);}
+.sc-ur{font-family:'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu',serif;font-size:13.5px;line-height:1.9;font-weight:800;color:var(--txt);}
 .sc-en{font-size:9.5px;color:var(--txt-3);font-weight:600;}
 .sc-badge{font-size:8.5px;font-weight:800;padding:2px 7px;border-radius:8px;
   background:rgba(34,197,94,.14);color:var(--green);border:1px solid rgba(34,197,94,.25);}
@@ -3329,7 +3335,7 @@ async function pullFromFirebase(){
     if (resBills.ok){
       const bData = await resBills.json();
       if (bData && typeof bData === 'object'){
-        const fetchedBills = Object.values(bData).filter(x => x && x.id);
+        const fetchedBills = Object.values(bData).filter(x => x && x.id).map(b => ({ ...b, synced: true }));
         if (fetchedBills.length > 0){
           fetchedBills.sort((a,b) => (new Date(b.date || 0)) - (new Date(a.date || 0)));
           bills = fetchedBills;
@@ -3380,7 +3386,7 @@ function attachFirebaseRealtimeListeners(){
     try {
       const data = snap.val();
       if (data && typeof data === 'object'){
-        const fetchedBills = Object.values(data).filter(x => x && x.id);
+        const fetchedBills = Object.values(data).filter(x => x && x.id).map(b => ({ ...b, synced: true }));
         if (fetchedBills.length > 0){
           fetchedBills.sort((a,b) => (new Date(b.date || 0)) - (new Date(a.date || 0)));
           bills = fetchedBills;
@@ -3478,6 +3484,7 @@ async function syncBillToFirebase(bill, manual=false){
     const cleanData = JSON.parse(JSON.stringify(bill));
     cleanData.updatedAt = Date.now();
     cleanData.shop = settings.shopEn;
+    cleanData.synced = true;
 
     // Direct REST PUT: 100% works on both file:// and https:// (GitHub Pages)
     const url = `${RTDB_BASE}/bills/${bill.id}.json`;
