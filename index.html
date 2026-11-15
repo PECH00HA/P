@@ -436,11 +436,15 @@ body.light .btn.gold{
 .paper{position:relative;width:100%;max-width:320px;background:#ffffff;color:#0f172a;
   border-radius:6px;padding:12px 10px;font-family:'Poppins',sans-serif;font-weight:600;
   box-shadow:0 10px 30px rgba(0,0,0,.35);overflow:hidden;font-size:10.5px;line-height:1.4;}
-.p-stamp{display:table;margin:0 auto 3px;padding:2px 7px;border:2px solid #b91c1c;border-radius:4px;
-  color:#b91c1c;font-weight:900;font-size:10.5px;letter-spacing:1px;text-transform:uppercase;
-  transform:rotate(-3deg);background:rgba(255,255,255,.9);}
+.p-stamp{display:table;margin:0 auto 4px;padding:3px 10px;border:2px solid #b91c1c;border-radius:6px;
+  color:#b91c1c;font-weight:900;font-size:10.5px;text-align:center;background:#ffffff;
+  letter-spacing:0 !important;text-transform:none !important;direction:ltr;transform:none !important;}
 .p-stamp.partial{border-color:#c2410c;color:#c2410c;}
 .p-stamp.credit{border-color:#a16207;color:#a16207;}
+.p-stamp .stamp-en{font-family:'Poppins',sans-serif;font-weight:900;letter-spacing:0.5px;display:inline-block;direction:ltr;}
+.p-stamp .stamp-ur{font-family:'Noto Nastaliq Urdu',serif !important;letter-spacing:0 !important;
+  direction:rtl !important;display:inline-block;margin:0 5px;font-size:11.5px;line-height:1.5;font-weight:800;}
+.p-stamp .stamp-due{font-family:'Poppins',sans-serif;font-weight:800;display:inline-block;direction:ltr;}
 .p-head{text-align:center;padding-bottom:5px;border-bottom:1.5px solid #0f172a;}
 .p-urdu{font-family:'Noto Nastaliq Urdu',serif !important;font-size:15px !important;line-height:2.1 !important;
   font-weight:800 !important;color:#0f172a !important;margin-bottom:1px !important;}
@@ -473,9 +477,9 @@ table.p-items td.r,table.p-items th.r{text-align:right;}
 .p-tr.grand b{font-size:13.5px;font-weight:900;}
 .p-tr.paid b{color:#15803d;}
 .p-tr.due b{color:#b91c1c;}
-.p-note-line{text-align:center;font-family:'Noto Nastaliq Urdu',serif;
-  font-size:10px;line-height:1.8;color:#0f172a;font-weight:800;
-  margin-top:6px;padding-top:5px;border-top:1px dashed #94a3b8;}
+.p-note-line{text-align:center;font-family:'Noto Nastaliq Urdu',serif !important;
+  font-size:11.5px !important;line-height:2.0 !important;color:#0f172a;font-weight:800;
+  margin-top:6px;padding-top:5px;border-top:1px dashed #94a3b8;letter-spacing:0 !important;direction:rtl;}
 .p-foot{display:flex;justify-content:space-between;align-items:flex-end;
   margin-top:10px;font-size:7.5px;color:#475569;font-weight:700;}
 .p-foot .sig{border-top:1px solid #64748b;padding-top:2px;width:65px;text-align:center;}
@@ -2064,16 +2068,14 @@ function finalizeBill(billData){
   updateBaqayaTotal(); renderHistory(); renderReports();
   toast(t('بل بن گیا ✔', 'Bill generated ✔'));
 
-  // Event-Driven Sync
-  if (fbReady) {
-    updateReceiptSyncBadge('syncing');
-    syncBillToFirebase(billData);
-    if (isStockEnabled() && Array.isArray(billData.items)){
-      billData.items.forEach(ci => {
-        const target = items.find(x => x.id === ci.itemId || x.id === ci.id || (x.ur && x.ur === ci.ur) || (x.name && x.name === ci.name));
-        if (target) syncItemToFirebase(target);
-      });
-    }
+  // Instant Cloud Sync on New Bill Creation (No delay, no blocking)
+  updateReceiptSyncBadge('syncing');
+  syncBillToFirebase(billData);
+  if (isStockEnabled() && Array.isArray(billData.items)){
+    billData.items.forEach(ci => {
+      const target = items.find(x => x.id === ci.itemId || x.id === ci.id || (x.ur && x.ur === ci.ur) || (x.name && x.name === ci.name));
+      if (target) syncItemToFirebase(target);
+    });
   }
 }
 
@@ -2138,10 +2140,17 @@ function renderReceipt(b, isNewPayment = false){
   currentBill = b;
   const advance = Number(b.advance) || 0;
   const remaining = Number(b.remaining) || 0;
-  let stampClass = '', stampText = 'PAID';
-  if (b.payStatus === 'Full Paid' || (remaining <= 0 && b.total > 0)){ stampClass = ''; stampText = 'PAID / مکمل ادا شدہ ✔'; }
-  else if (advance > 0){ stampClass = 'partial'; stampText = `PARTIAL / قسط ادا شدہ (باقی: Rs ${fmt(remaining)})`; }
-  else { stampClass = 'credit'; stampText = 'CREDIT / UDHAR (ادھار)'; }
+  let stampClass = '', stampText = '';
+  if (b.payStatus === 'Full Paid' || (remaining <= 0 && b.total > 0)){
+    stampClass = '';
+    stampText = `<span class="stamp-en" dir="ltr">PAID</span> • <span class="stamp-ur" dir="rtl">مکمل ادا شدہ</span> ✔`;
+  } else if (advance > 0){
+    stampClass = 'partial';
+    stampText = `<span class="stamp-en" dir="ltr">PARTIAL</span> • <span class="stamp-ur" dir="rtl">قسط ادا شدہ</span> • <span class="stamp-due" dir="ltr">(Due: Rs ${fmt(remaining)})</span>`;
+  } else {
+    stampClass = 'credit';
+    stampText = `<span class="stamp-en" dir="ltr">CREDIT</span> • <span class="stamp-ur" dir="rtl">ادھار کھاتہ</span>`;
+  }
 
   const rows = (b.items || []).map((l, i) => {
     const title = LANG === 'en' ? (l.name || l.ur) : (l.ur || l.name);
@@ -2351,6 +2360,10 @@ if ($('#printBtn')) $('#printBtn').addEventListener('click', doPrint);
 async function generateReceiptCanvas(){
   const paper = $('#receiptPaper');
   if (!paper) throw new Error('Receipt element not found');
+
+  if (document.fonts && document.fonts.ready){
+    try { await document.fonts.ready; } catch(e){}
+  }
 
   if (typeof html2canvas === 'undefined'){
     await new Promise((resolve, reject) => {
@@ -2697,14 +2710,12 @@ if ($('#payConfirmBtn')) $('#payConfirmBtn').addEventListener('click', () => {
 
   toast(LANG === 'en' ? `Rs ${fmt(actualPay)} received ✔` : `Rs ${fmt(actualPay)} وصول ✔`);
 
-  // 9. Quota-safe sync for this payment
-  if (fbReady) {
-    updateReceiptSyncBadge('syncing');
-    syncBillToFirebase(target);
-  }
+  // 9. Instant sync for this payment
+  updateReceiptSyncBadge('syncing');
+  syncBillToFirebase(target);
 });
 
-if ($('#recvBtn'))if ($('#recvBtn')) $('#recvBtn').addEventListener('click', () => {
+if ($('#recvBtn')) $('#recvBtn').addEventListener('click', () => {
   if (currentBill && (Number(currentBill.remaining) || 0) > 0) openPayModal(currentBill);
 });
 
@@ -3435,12 +3446,22 @@ function initFirebase(){
   }
 }
 
-// Window tab switch re-check
+// Window tab switch re-check & auto sync pending bills
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible' && navigator.onLine){
     pullFromFirebase();
+    autoSyncPendingBills(true);
   }
 });
+
+// Periodic background heartbeat sync (every 30s)
+setInterval(() => {
+  if (navigator.onLine && !syncInProgress && !isPullingFromFb){
+    pullFromFirebase();
+    const hasUnsynced = Array.isArray(bills) && bills.some(b => !b.synced);
+    if (hasUnsynced) autoSyncPendingBills(true);
+  }
+}, 30000);
 
 // Targeted Event-Driven Sync (Only fires on actual changes)
 async function syncBillToFirebase(bill, manual=false){
@@ -3526,14 +3547,14 @@ async function deleteBillFromFirebase(billId){
   } catch(e){ console.warn(e); updateGlobalSyncUI('connected'); }
 }
 
-async function autoSyncPendingBills(){
+async function autoSyncPendingBills(silent = false){
   if (syncInProgress || !navigator.onLine){
-    if (!navigator.onLine) toast(t('انٹرنیٹ بند ہے', 'No Internet connection'));
+    if (!navigator.onLine && !silent) toast(t('انٹرنیٹ بند ہے', 'No Internet connection'));
     return;
   }
   const pending = bills.filter(b => !b.synced);
   if (!pending.length){
-    toast(t('تمام بل کلاؤڈ پر سنک ہیں ✔', 'All bills already synced ✔'));
+    if (!silent) toast(t('تمام بل کلاؤڈ پر سنک ہیں ✔', 'All bills already synced ✔'));
     return;
   }
   syncInProgress = true;
@@ -3541,14 +3562,14 @@ async function autoSyncPendingBills(){
   let ok = 0;
   for (let i = 0; i < pending.length; i++){
     const b = pending[i];
-    toast(`${t('سنک ہو رہا ہے','Syncing')} ${i+1}/${pending.length}...`, 900);
+    if (!silent) toast(`${t('سنک ہو رہا ہے','Syncing')} ${i+1}/${pending.length}...`, 900);
     const success = await syncBillToFirebase(b, false);
     if (success) ok++;
   }
   syncInProgress = false;
   updateGlobalSyncUI('connected');
   renderHistory();
-  toast(LANG === 'en' ? `${ok}/${pending.length} Bills Synced ✔` : `${ok}/${pending.length} بل سنک ہو گئے ✔`);
+  if (!silent) toast(LANG === 'en' ? `${ok}/${pending.length} Bills Synced ✔` : `${ok}/${pending.length} بل سنک ہو گئے ✔`);
 }
 
 async function pushItemsToFirebase(){
